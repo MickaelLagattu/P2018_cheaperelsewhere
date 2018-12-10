@@ -5,14 +5,13 @@ from flask import Flask
 import os
 
 from flask import Flask, render_template, request
+from .database import Database
+from .page_factory import PageFactory
 
 
 def create_app():
     """creates the app and makes routes"""
     app = Flask(__name__, instance_relative_config=True)
-    app.config.from_mapping(
-        DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite')  # Default database path
-    )
 
     # ensure the instance folder exists
     try:
@@ -21,28 +20,30 @@ def create_app():
         pass
 
     # Enabling the database interactions
-    from . import db
-    db.init_app(app)
+    database = Database(app)
 
-    # a simple page that says hello
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World!'
+
 
     # The main page
     @app.route('/')
     @app.route('/index/')
     def main_page():
-        return render_template("main_page.html")
+        page = PageFactory.generate_page('MAIN')
+        return page.process()
 
     # The result page
     @app.route('/results', methods=('GET', 'POST'))
     def results_page():
-        if request.method == 'POST':
-            link = request.form['link']
+        page = PageFactory.generate_page('RESULT')
+        return page.process(database)
 
-            # Send the link to another part of the program for processing
+    @app.route('/error')
+    def error_page():
+        page = PageFactory.generate_page('ERROR')
+        return page.process()
 
-        return render_template("results.html")
+    #Here we can launch the scrapper
+
+
 
     return app

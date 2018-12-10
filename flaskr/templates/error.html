@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Error page{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  An error occured, you are probably trying to access the result page without having submitted a link.
+  {{message}}
+{% endblock %}
