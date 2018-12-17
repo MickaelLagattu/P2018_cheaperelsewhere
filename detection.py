@@ -3,6 +3,7 @@ import os
 import time
 import threading
 import _thread
+os.chdir("/home/insight/PycharmProjects/P2018_cheaperelsewhere/imagesComparison")
 t1=time.time()
 execution_path = os.getcwd()
 path=""

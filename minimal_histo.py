@@ -15,7 +15,7 @@ def correlation(image1,image2):
     reference = filenames[0]
     for filename in filenames:
         image = cv2.imread(filename)
-        images[filename] = cv2.cvtColor(image, cvhttps://github.com2.COLOR_BGR2RGB)
+        images[filename] = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         hist = cv2.calcHist([image], [0, 1, 2], None, [8, 8, 8],[0, 256, 0, 256, 0, 256])
         hist = cv2.normalize(hist, hist)
         index[filename] = hist

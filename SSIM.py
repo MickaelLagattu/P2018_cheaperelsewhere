@@ -2,7 +2,8 @@ from skimage.measure import compare_ssim
 import matplotlib.pyplot as plt
 import numpy as np
 import cv2
-
+import os
+os.chdir("/home/insight/PycharmProjects/cheaper_elsewhere/")
 
 def mse(imageA, imageB):
     # the 'Mean Squared Error' between the two images is the
