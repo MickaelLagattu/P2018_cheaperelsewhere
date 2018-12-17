@@ -1,17 +1,16 @@
 # In this file we define the Flask application
 
-from flask import Flask
 
 import os
 
-from flask import Flask, render_template, request
+from flask import Flask
 from .database import Database
 from .page_factory import PageFactory
 
 
 def create_app():
     """creates the app and makes routes"""
-    app = Flask(__name__, instance_relative_config=True)
+    app = Flask(__name__, instance_relative_config=True, static_url_path = "/static", static_folder = "static")
 
     # ensure the instance folder exists
     try:

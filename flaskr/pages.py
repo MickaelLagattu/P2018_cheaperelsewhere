@@ -1,6 +1,7 @@
 import abc
 
 from flask import render_template, request, redirect, url_for
+from .linkProcess import LinkProcess
 
 
 class AbstractPage(abc.ABC):
@@ -38,11 +39,15 @@ class ResultPage(AbstractPage):
             else:
                 link = request.form['link']
 
-                # Send the link to another part of the program for processing
 
-                return render_template("results.html", link=link)
+                # Send the link to another part of the program for processing
+                results = LinkProcess.process_test(link)
+                if len(results) > 0:
+                    return render_template("results.html", results=results)
+                else:
+                    return render_template("no_results.html")
         else:
-            return redirect(url_for("error_page?code=1000"))
+            return redirect(url_for("error_page"))
 
 
 class ErrorPage(AbstractPage):
