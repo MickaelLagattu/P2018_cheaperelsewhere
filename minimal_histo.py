@@ -6,9 +6,9 @@ import os
 
 index = {}
 images = {}
-
-path="/home/insight/PycharmProjects/cheaper_elsewhere/images/test"
-os.chdir(path)
+global_path_histo="/home/insight/PycharmProjects/cheaper_elsewhere/data/"
+path_histo=global_path_histo+"images/test"
+os.chdir(path_histo)
 
 def correlation(image1,image2):
     filenames=[image1,image2]
