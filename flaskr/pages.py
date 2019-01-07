@@ -2,6 +2,8 @@ import abc
 
 from flask import render_template, request, redirect, url_for
 from .linkProcess import LinkProcess
+from .Forms import LinkForm
+
 
 
 class AbstractPage(abc.ABC):
@@ -21,9 +23,13 @@ class MainPage(AbstractPage):
     def __init__(self):
         """Constructor"""
         AbstractPage.__init__(self)
+        self.__form = LinkForm()
+
+
+
 
     def process(self):
-        return render_template("main_page.html")
+        return render_template("main_page.html", form=self.__form)
 
 class ResultPage(AbstractPage):
     """Result page of the site"""
@@ -35,7 +41,7 @@ class ResultPage(AbstractPage):
     def process(self, database):
         if request.method == 'POST':
             if 'link' not in request.form:
-                return redirect(url_for("error_page?code=1000"))
+                return redirect(url_for("error_page"))
             else:
                 link = request.form['link']
 

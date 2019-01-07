@@ -6,11 +6,17 @@ import os
 from flask import Flask
 from .database import Database
 from .page_factory import PageFactory
+from flask_bootstrap import Bootstrap
+
 
 
 def create_app():
     """creates the app and makes routes"""
     app = Flask(__name__, instance_relative_config=True, static_url_path = "/static", static_folder = "static")
+    Bootstrap(app)
+    app.config['BOOTSTRAP_USE_CDN'] = True
+    app.config['SECRET_KEY'] = 'thisisasecret'
+
 
     # ensure the instance folder exists
     try:
