@@ -45,7 +45,7 @@ class ResultPage(AbstractPage):
 
 
                 # Send the link to another part of the program for processing
-                results = LinkProcess.process_test(link)
+                results = LinkProcess.process_test(link, database)
                 if len(results) > 0:
                     return render_template("results_with_bootstrap.html", results=results, nb_results=len(results))
                 else:

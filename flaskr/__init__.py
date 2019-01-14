@@ -7,6 +7,7 @@ from flask import Flask
 from .database import Database
 from .page_factory import PageFactory
 from flask_bootstrap import Bootstrap
+from .Scrapp_launcher import Scrapper
 
 
 
@@ -27,6 +28,9 @@ def create_app():
     # Enabling the database interactions
     database = Database(app)
 
+    #Launching the scrapping
+    scrapper = Scrapper(database.mongo)
+    scrapper.start()
 
 
 
@@ -47,8 +51,6 @@ def create_app():
     def error_page():
         page = PageFactory.generate_page('ERROR')
         return page.process()
-
-    #Here we can launch the scrapper
 
 
 
