@@ -2,7 +2,6 @@ import abc
 
 from flask import render_template, request, redirect, url_for
 from .linkProcess import LinkProcess
-from .Forms import LinkForm
 
 
 
@@ -23,13 +22,12 @@ class MainPage(AbstractPage):
     def __init__(self):
         """Constructor"""
         AbstractPage.__init__(self)
-        self.__form = LinkForm()
 
 
 
 
     def process(self):
-        return render_template("main_page.html", form=self.__form)
+        return render_template("main_page.html")
 
 class ResultPage(AbstractPage):
     """Result page of the site"""
@@ -49,7 +47,7 @@ class ResultPage(AbstractPage):
                 # Send the link to another part of the program for processing
                 results = LinkProcess.process_test(link)
                 if len(results) > 0:
-                    return render_template("results.html", results=results)
+                    return render_template("results_with_bootstrap.html", results=results, nb_results=len(results))
                 else:
                     return render_template("no_results.html")
         else:

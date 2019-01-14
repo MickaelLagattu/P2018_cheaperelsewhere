@@ -18,30 +18,27 @@ class LinkProcess:
         result1 = {
             "id": 123,
             "title": "Jolie annonce",
-            "link": "www.google.fr",
+            "link": "http://www.google.fr",
             "surface": 12,
             "rooms": 2,
             "location": "Paris 16e",
             "price" : 9999999,
             "agency": "Century 42",
             "text": "Ceci est une annonce de type attractive.",
-            "images": [
-                {"link": "/static/TestFrontImages/test_image_1.jpg"}
-            ]
+            "image": "/static/TestFrontImages/test_image_1.jpg"
+
         }
         result2 = {
             "id": 128,
             "title": "Annonce pas ouf",
-            "link": "www.centralesupelec.fr",
+            "link": "http://www.centralesupelec.fr",
             "surface": 12,
             "rooms": 2,
             "location": "Gif-sur-Yvette",
             "price": 9999999,
             "agency": "P.u.P",
             "text": "Ceci est une annonce de type attractive mais pas top.",
-            "images": [
-                {"link": "/static/TestFrontImages/test_image_2.jpg"}
-            ]
+            "image": "/static/TestFrontImages/test_image_2.jpg"
         }
 
 

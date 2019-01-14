@@ -1,17 +1,23 @@
 {% extends 'base.html' %}
-{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block head %}
+    {{super()}}
 
 
+{% endblock %}
 
 
 {% block content %}
-    <h1>Welcome !</h1>
-    <h2> Please enter your link below so we can compare it to our database...</h2>
-    <br>
-    <br>
-<form method="POST" action="/results">
-    {{ form.hidden_tag() }}
-    {{ wtf.form_field(form.link) }}
-    <input type="submit" value="Go">
+    {{super()}}
+
+<form method="POST" action="/results" id="my_form">
+    <div class="container h-100">
+      <div class="d-flex justify-content-center h-100">
+        <div class="searchbar">
+          <input class="search_input" type="text" name="link" placeholder="Enter your link...">
+          <a href="javascript:{}" onclick="document.getElementById('my_form').submit(); return false;" class="search_icon"><i class="fas fa-search"></i></a>
+        </div>
+      </div>
+    </div>
 </form>
 {% endblock %}

@@ -1,9 +1,16 @@
 {% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
 
-{% block header %}
-  <h1>{% block title %}Results Page{% endblock %}</h1>
+{% block head %}
+    {{super()}}
+
+
 {% endblock %}
 
+
 {% block content %}
-  No result, sorry :(
+    {{super()}}
+<p>
+  It looks like we did not find anything... You may try again tomorrow.
+</p>
 {% endblock %}

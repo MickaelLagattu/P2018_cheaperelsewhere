@@ -1,17 +1,37 @@
-{% extends 'bootstrap/base.html' %}
+{% extends "bootstrap/base.html" %}
+{% block head %}
+    {{ super() }}
 
-{% block title %}
-    {% if title %}{{ title }}{% else %}Cheaper Elsewhere{% endif %}
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/search_bar.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/title.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/search_result.css')}}">
+
+    <title> Cheaper Elsewhere</title>
+
 {% endblock %}
 
+{% block body %}
+<body>
+<div class="harut">
+  <section class="one">
+        <a href="/index" data-bf="Jeddad - Lassouad" data-af="Matah - Lagattu">Cheaper Elsewhere</a>
+	</section>
+</div>
 
-{% block header %}
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-
-{% endblock %}
-
-{% block content %}
-
+    <hr>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+           </ul>
+       {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+</body>
 {% endblock %}
