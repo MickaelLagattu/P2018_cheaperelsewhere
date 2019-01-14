@@ -1,9 +1,7 @@
 
 import unittest
-from bov import BoV
-from w2v import Word2Vec
-from textpreprocessing import PreprocessSentence
-from global_variables import w2vfile
+from ce_text_processing import BoV, Word2Vec, PreprocessSentence
+from text_global_variables import w2vfile
 import numpy as np
 
 class TestBagOfWords(unittest.TestCase):
@@ -36,8 +34,6 @@ class TestBagOfWords(unittest.TestCase):
         score = TestBagOfWords.bov.score(sent,empty_sent)
         self.assertEqual(score,0)
 
-        
-
     def test_build_idf(self):
         pass
 
@@ -64,8 +60,3 @@ class TestWord2Vec(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-    # # suite = unittest.TestLoader().loadTestsFromTestCase(TestBagOfWords)
-    # # unittest.TextTestRunner(verbosity=2).run(suite)
-    # # testbov = TestBagOfWords()
-    # widgetTestSuite = unittest.TestSuite()
-    # widgetTestSuite.addTest(TestBagOfWords('test_default_size'))
