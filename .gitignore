@@ -6,6 +6,9 @@ __pycache__/
 # C extensions
 *.so
 
+# word2vec model
+*.vec
+
 # Distribution / packaging
 .Python
 build/
