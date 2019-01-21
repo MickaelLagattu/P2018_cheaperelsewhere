@@ -1,0 +1,87 @@
+
+.harut {
+  height: 350px;
+  width: 100%;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  position: relative;
+  overflow: hidden;
+  margin: 0 auto 0px;
+}
+.harut a {
+  text-transform: uppercase;
+  text-align: center;
+  text-decoration: none;
+  font-size: 4.875em;
+  font-weight: 900;
+  color: #fff;
+}
+.harut a:after, .harut a:before {
+  content: '';
+}
+
+.harut {
+  background-color: #transparent;
+  position: relative;
+  z-index: 10;
+}
+.harut a {
+  width: 652px;
+  height: 78px;
+  line-height: 78px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -326px;
+  margin-top: -39px;
+  font-weight: 200;
+  color: #BABABA;
+  -webkit-transition: all 2s cubic-bezier(0.21, 1, 0.84, 1.01);
+  -moz-transition: all 2s cubic-bezier(0.21, 1, 0.84, 1.01);
+  transition: all 2s cubic-bezier(0.21, 1, 0.84, 1.01);
+}
+.harut a:before,.harut a:after {
+  color: #000;
+  font-weight: 900;
+  font-size: 30px;
+  text-transform: none;
+  display: block;
+  -webkit-transition: inherit;
+  -moz-transition: inherit;
+  transition: inherit;
+}
+.harut a:before {
+  content: attr(data-bf);
+  position: absolute;
+  top: -45px;
+  left: -5px;
+}
+.harut a:after {
+  content: attr(data-af);
+  position: absolute;
+  right: 0;
+  bottom: -30px;
+}
+.harut a:hover {
+  -webkit-transform: scale(1.05);
+  -moz-transform: scale(1.05);
+  -ms-transform: scale(1.05);
+  -o-transform: scale(1.05);
+  transform: scale(1.05);
+}
+.harut a:hover:before {
+  -webkit-transform: scale(1.2) translate(-25px, -15px);
+  -moz-transform: scale(1.2) translate(-25px, -15px);
+  -ms-transform: scale(1.2) translate(-25px, -15px);
+  -o-transform: scale(1.2) translate(-25px, -15px);
+  transform: scale(1.2) translate(-25px, -15px);
+}
+.harut a:hover:after {
+  -webkit-transform: scale(1.2) translate(25px, 15px);
+  -moz-transform: scale(1.2) translate(25px, 15px);
+  -ms-transform: scale(1.2) translate(25px, 15px);
+  -o-transform: scale(1.2) translate(25px, 15px);
+  transform: scale(1.2) translate(25px, 15px);
+}
