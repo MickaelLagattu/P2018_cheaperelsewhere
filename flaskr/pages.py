@@ -36,7 +36,7 @@ class ResultPage(AbstractPage):
         """Constructor"""
         AbstractPage.__init__(self)
 
-    def process(self, database):
+    def process(self, mongo):
         if request.method == 'POST':
             if 'link' not in request.form:
                 return redirect(url_for("error_page"))
@@ -45,12 +45,12 @@ class ResultPage(AbstractPage):
 
 
                 # Send the link to another part of the program for processing
-                #results = LinkProcess.process_test(link, database)
-                results = LinkProcess.process(link, database)
+                #results = LinkProcess.process_test(link, mongo)
+                results = LinkProcess.process(link, mongo)
                 if len(results) > 0:
                     return render_template("results_with_bootstrap.html", results=results, nb_results=len(results))
                 else:
-                    return render_template("no_results.html")
+                    return render_template("no_result.html")
         else:
             return redirect(url_for("error_page"))
 

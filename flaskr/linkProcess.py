@@ -4,12 +4,12 @@ class LinkProcess:
     """Class that will be used to receive the link sent by the user and return the results from the DB"""
 
     @staticmethod
-    def process(link, database):
+    def process(link, mongo):
         """Search for similar announces in the DB and returns the results"""
 
         #Find this ad in our db
-        ad_in_db = database.mongo.db.ads.find({'link': link})
-        if len(ad_in_db) == 0:
+        ad_in_db = mongo.db.ads.find({'link': link})
+        if ad_in_db.count() == 0:
             return {}
         else:
             ad = ad_in_db[0]
@@ -17,14 +17,14 @@ class LinkProcess:
             #Get similar ads
             similar = ad['similar']
 
-            results = database.mongo.db.ads.find({'_id': {"$in" : similar}})
+            results = mongo.db.ads.find({'_id': {"$in" : similar}})
 
 
 
-            return results
+            return list(results)
 
     @staticmethod
-    def process_test(link, database):
+    def process_test(link, mongo):
         """Same but with fake results to test front"""
 
         result1 = {
