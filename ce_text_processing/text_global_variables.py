@@ -15,5 +15,5 @@ sentences_file = "" # path to file that contains text from different announces
 keep_num = False # False : delete numerical caracters, True : keep numerical caracters
 keep_ponc = False # True : keep ponctuation , False : not
 split_by = " " # caracter to split the sentence by
-to_lower = True # True : transfrom all characters to lowercase, Fale : keep the characters as they are
+to_lower = True # True : transfrom all characters to lowercase, False : keep the characters as they are
 ##
