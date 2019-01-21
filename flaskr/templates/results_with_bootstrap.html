@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block head %}
+    {{super()}}
+
+{% endblock %}
+
+
+{% block content %}
+    {{super()}}
+
+<div class=""container>
+      <hgroup class="mb20">
+		<h1>Search Results</h1>
+		<h2 class="lead"><strong class="text-danger">{{nb_results}}</strong> results were found for the search for your link</h2>
+	</hgroup>
+  <section class="col-xs-12 col-sm-6 col-md-12">
+  {% for result in results %}
+    <article class="search-result row">
+
+      <div class="col-xs-12 col-sm-12 col-md-3">
+        <a href="{{ result['link'] }}" title="{{ result['title'] }}" class="thumbnail"><img src="{{ result['image'] }}" alt="{{ result['image'] }}" /></a>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-2">
+        <ul class="meta-search">
+          <li> <span>Price: {{result['price']}}€</span></li>
+          <li> <span>Surface: {{result['surface']}}</span></li>
+          <li> <span>Rooms: {{result['rooms']}}</span></li>
+          <li> <span>Location: {{result['location']}}</span></li>
+          <li> <span>Agency : {{result['agency']}}</span></li>
+
+        </ul>
+      </div>
+
+      <div class="col-xs-12 col-sm-12 col-md-7 excerpet">
+        <h3><a href="{{ result['link'] }}" title="">{{ result['title'] }}</a></h3>
+        <p>
+          {{result['text']}}
+
+        </p>
+        <span class="plus"><a href="{{ result['link'] }}" title="Lorem ipsum"><i class="glyphicon glyphicon-plus"></i></a></span>
+      </div>
+      <span class="clearfix borda"></span>
+    </article>
+    {% if not loop.last %}
+      <hr>
+    {% endif %}
+  {% endfor %}
+
+  </section>
+</div>
+{% endblock %}
