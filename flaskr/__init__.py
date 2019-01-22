@@ -56,8 +56,8 @@ def create_app():
     mongo.db.command('dropDatabase')
 
     # Launching the scrapping
-    # scrapper = Scrapper(mongo)
-    # scrapper.start()
+    scrapper = Scrapper(mongo)
+    scrapper.start()
 
     # For test only : create fake bdd
     FakeBDD.create_fake_bdd(mongo)
