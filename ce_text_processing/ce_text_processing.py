@@ -1,8 +1,16 @@
+__version__ = 1.0
+__author__      = "Cheaper Elsewhere team"
+__copyright__   = "Copyright 2019, CS-CE"
+
+
 import io
 import numpy as np
 import re
 
 class Word2Vec:
+    """
+    Class to get words' representation
+    """
     def __init__(self, fname, nmax=5000):
         self.load_wordvec(fname, nmax)
         self.word2id = {i:list(self.word2vec.keys()).index(i) for i in self.word2vec.keys()}
@@ -13,10 +21,13 @@ class Word2Vec:
 
     def load_wordvec(self, fname, nmax):
         """
+        load a word2vec module from .vec file
         Parameters
         -----------
         fname : str
             Path for the file .vec (contains words' embeddings)
+        nmax : int
+            number of maximal desired words
         """
         self.word2vec = {}
         with io.open(fname, encoding='utf-8') as f:
@@ -33,6 +44,9 @@ class Word2Vec:
         Parameters
         -----------
         w : str or array
+            the desired word if it's a string or its vectorial representation
+        K (optional) : int
+            the number of desired similar words
 
         Returns
         -----------
@@ -50,6 +64,7 @@ class Word2Vec:
 
     def score(self, w1, w2):
         """
+        give a score between 0 and 1 for a 2 given words (1 : very similar, 0: not similar)
         Parameters
         -----------
         w1 : str or array
@@ -64,10 +79,26 @@ class Word2Vec:
         else :
             emb1 = w1
         emb2 = self.word2vec[w2]
-        similarity_score = np.dot(emb1,emb2) / (np.linalg.norm(emb1) * np.linalg.norm(emb2))
+        similarity_score = 0.5 + 0.5*(np.dot(emb1,emb2) / (np.linalg.norm(emb1) * np.linalg.norm(emb2)))
         return similarity_score
 
 class PreprocessSentence():
+    """
+    Class for sentence preprocessing
+    attributes
+    ---------------
+    to_lower (optional) : bool, default : True
+        True : transform all words to lower case, False: keep their original form
+
+    keep_num (optional) : bool, default : False
+        True : keep the numerical characters in the sentence, False: delete all numerical characters from the sentence
+
+    keep_ponc (optional) : bool, default : False
+        True : keep all the ponctuation in the sentence, False : delete all the ponctuation characters from the sentence
+
+    split_by (optional) : str, default : " "
+        used character to split the sentence into list of words
+    """
     def __init__(self,to_lower = True, keep_num = False,keep_ponc = False, split_by = " "): # add some params
         self._to_lower = to_lower
         self._keep_num = keep_num
@@ -105,6 +136,16 @@ class PreprocessSentence():
 
 
     def preprocess_sentence(self,sentence:str)-> list:
+        """
+        parameters
+        -----------
+        sentence : str
+            the sentence to be preprocessed
+
+        Returns
+        -------
+            list of words after preprocessing
+        """
         preprocess_sentence = sentence.strip()
         if self.to_lower :
             preprocess_sentence = preprocess_sentence.lower()
@@ -116,6 +157,13 @@ class PreprocessSentence():
         return [x for x in preprocess_sentence.split(self.split_by) if x != ""]
 
 class BoV():
+    """
+    Class for sentence representation
+    attributes
+    ---------------
+    w2v : Word2Vec
+        a word2vec instance (see Word2Vec class)
+    """
     def __init__(self, w2v):
         self._w2v = w2v
         self._idf = {}
@@ -132,6 +180,18 @@ class BoV():
     idf = property(get_w2v)
 
     def encode(self, sentences: list, idf=False):
+        """
+        Encode (transform to vector) a list of a given sentences
+        parameters
+        ---------------
+        sentences : list[list[str]]
+            a list of sentences, each sentence is a list of words (str)
+
+        Returns
+        -------
+        np.array with shape (n, d) (n = number of sentences, d = dimension of the word encoding)
+        """
+
         if not isinstance(idf,bool):
             raise ValueError("idf must be a boolean")
         if not isinstance(sentences,list):
@@ -164,7 +224,6 @@ class BoV():
 
         scores = [self.score(s, sent, idf = idf) for sent in sentences if sent!=s]
         sorted_indices = np.argsort(np.array(scores))
-
         top_indices = sorted_indices[-K-1:-1]
         return [sentences[i] for i in top_indices]
 
