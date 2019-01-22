@@ -44,7 +44,7 @@ class Scrapper(Thread):
                 database_entry = {
                     "title": n_uplet[7],
                     "link": link,
-                    "surface": n_uplet[2],
+                    "surface": n_uplet[1],
                     "rooms": n_uplet[4],
                     "location": "Arrondissement : " + str(n_uplet[5]),
                     "price": n_uplet[0],

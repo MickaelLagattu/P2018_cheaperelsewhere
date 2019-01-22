@@ -10,9 +10,18 @@ class GlobalComparator:
         place = ad['location']
         surface = ad['surface']
         site_id = ad['site_id']
-        surface_min, surface_max = surface*0.8, surface*1.2
-
-        potential_similar = mongo.db.ads.find({'location': place, 'surface': {"$gt" : surface_min, "$lt": surface_max}})
+        if type(surface) == int and place != 'NC':
+            surface_min, surface_max = surface*0.8, surface*1.2
+            potential_similar = mongo.db.ads.find(
+                {'location': place, 'surface': {"$gt": surface_min, "$lt": surface_max}})
+        elif place != "NC":
+            potential_similar = mongo.db.ads.find({'location': place})
+        elif type(surface) == int:
+            surface_min, surface_max = surface * 0.8, surface * 1.2
+            potential_similar = mongo.db.ads.find(
+                {'surface': {"$gt": surface_min, "$lt": surface_max}})
+        else:
+            potential_similar = mongo.db.ads.find()
 
         similar = []
         for ad2 in potential_similar:
