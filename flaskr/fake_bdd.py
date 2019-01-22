@@ -15,7 +15,8 @@ class FakeBDD:
             "agency": "Century 21",
             "text": "Ceci est une annonce intéressante pour une maison attractive et très bien entretenue",
             "image": "static/TestFrontImages/test_image_1.jpg",
-            "similar": []
+            "similar": [],
+            "site_id": "pap.fr123456789"
         }
         mongo.db.ads.insert_one(database_entry)
 
@@ -31,7 +32,8 @@ class FakeBDD:
             "agency": "Century 21",
             "text": "Ceci est une annonce intéressante pour une maison attractive et très bien entretenue",
             "image": "static/TestFrontImages/test_image_1.jpg",
-            "similar": []
+            "similar": [],
+            "site_id": "pap.fr1234567890"
         }
 
         mongo.db.ads.insert_one(database_entry)
@@ -46,7 +48,8 @@ class FakeBDD:
             "agency": "Century 21",
             "text": "Ceci est une annonce intéressante pour une maison attractive et très bien entretenue",
             "image": "static/TestFrontImages/test_image_1.jpg",
-            "similar": []
+            "similar": [],
+            "site_id": "pap.fr1234567891"
         }
 
         mongo.db.ads.insert_one(database_entry)
@@ -61,7 +64,8 @@ class FakeBDD:
             "agency": "Century 21",
             "text": "Ceci est une annonce intéressante pour une maison attractive et très bien entretenue",
             "image": "static/TestFrontImages/test_image_1.jpg",
-            "similar": []
+            "similar": [],
+            "site_id": "century21.fr123456789"
         }
 
         mongo.db.ads.insert_one(database_entry)
@@ -76,7 +80,8 @@ class FakeBDD:
             "agency": "Century 21",
             "text": "Ceci est une annonce intéressante pour une maison attractive et très bien entretenue",
             "image": "static/TestFrontImages/test_image_1.jpg",
-            "similar": []
+            "similar": [],
+            "site_id": "century21.fr123456789"
         }
         mongo.db.ads.insert_one(database_entry)
 

@@ -34,7 +34,7 @@ class Scrapper(Thread):
 
         for site in sites:
             #n_uplets, liens = la commande pour scrapper ce site. Doit renvoyer une liste de n_uplets et la liste des liens correspondants
-            n_uplets, links = [[5000,45,40,"F5",5,1,"Cette annonce est très belle","Une belle annonce","static/TestFrontImages/test_image_1.jpg"]], [["http://www.google.fr"]]
+            n_uplets, links = [[5000,45,40,"F5",5,1,"Cette annonce est très belle","Une belle annonce","static/TestFrontImages/test_image_1.jpg", "pap.fr123456789"]], [["http://www.google.fr"]]
 
             for k in range(len(n_uplets)):
                 n_uplet = n_uplets[k]
@@ -54,7 +54,8 @@ class Scrapper(Thread):
                     "agency": site,
                     "text": n_uplet[6],
                     "image": n_uplet[8],
-                    "similar": similar
+                    "similar": similar,
+                    "site_id": n_uplet[9]
                 }
                 self.__mongo.db.ads.insert_one(database_entry)
                 self.__scrap_log.write("New entry : " + str(database_entry) + "\n")
