@@ -4,6 +4,7 @@
 
 from threading import Thread
 import schedule
+from .global_comparator import GlobalComparator
 
 class Scrapper(Thread):
     """Class that launches the scrapping process regularly, with comparisons and database updates"""
@@ -40,10 +41,6 @@ class Scrapper(Thread):
                 n_uplet = n_uplets[k]
                 link = links[k]
 
-                #Comparisons
-                similar = []
-                #Là il faut remplir "similar" avec les annonces similaires à l'annonce en cours de traitement
-
                 database_entry = {
                     "title": n_uplet[7],
                     "link": link,
@@ -54,9 +51,15 @@ class Scrapper(Thread):
                     "agency": site,
                     "text": n_uplet[6],
                     "image": n_uplet[8],
-                    "similar": similar,
+                    "similar": [],
                     "site_id": n_uplet[9]
                 }
+
+
+                #Comparisons
+                similar = GlobalComparator.get_similar(self.__mongo, database_entry)
+
+                database_entry['similar'] = similar
                 self.__mongo.db.ads.insert_one(database_entry)
                 self.__scrap_log.write("New entry : " + str(database_entry) + "\n")
 

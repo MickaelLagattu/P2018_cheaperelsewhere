@@ -51,17 +51,17 @@ def create_app():
         page = PageFactory.generate_page('ERROR')
         return page.process()
 
-    @app.before_first_request
-    def before_first_request():
 
-        mongo.db.command('dropDatabase')
 
-        # Launching the scrapping
-        # scrapper = Scrapper(mongo)
-        # scrapper.start()
+    mongo.db.command('dropDatabase')
 
-        # For test only : create fake bdd
-        FakeBDD.create_fake_bdd(mongo)
+    # Launching the scrapping
+    # scrapper = Scrapper(mongo)
+    # scrapper.start()
+
+    # For test only : create fake bdd
+    FakeBDD.create_fake_bdd(mongo)
+
 
 
     return app

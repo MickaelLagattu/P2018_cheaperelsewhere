@@ -47,7 +47,7 @@ class LinkProcess:
             #Get similar ads
             similar = ad['similar']
 
-            results = mongo.db.ads.find({'_id': {"$in" : similar}})
+            results = mongo.db.ads.find({'site_id': {"$in" : similar}})
 
 
 
