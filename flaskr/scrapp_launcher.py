@@ -12,7 +12,7 @@ class Scrapper(Thread):
         """Constructor, mongo is the mongodb object"""
         Thread.__init__(self)
         self.__mongo = mongo
-        self.__scrap_log = open("log/scrap.log", "w")
+        self.__scrap_log = open("scrap.log", "w")
 
     def __del__(self):
         """Destructor"""
