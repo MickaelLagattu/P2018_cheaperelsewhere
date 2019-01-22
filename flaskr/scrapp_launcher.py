@@ -5,6 +5,9 @@
 from threading import Thread
 import schedule
 from .global_comparator import GlobalComparator
+from .Scrapp import scrapp_all_century_21
+from .scrap_pap import scrapp_all_pap
+
 
 class Scrapper(Thread):
     """Class that launches the scrapping process regularly, with comparisons and database updates"""
@@ -31,22 +34,25 @@ class Scrapper(Thread):
 
         self.__scrap_log.write("Launching scrapper\n")
 
-        sites = ["machin", "truc"] # The list of sites to be scrapped
+        sites = ["century21.fr", "pap.fr"] # The list of sites to be scrapped
 
         for site in sites:
             #n_uplets, liens = la commande pour scrapper ce site. Doit renvoyer une liste de n_uplets et la liste des liens correspondants
-            n_uplets, links = [[5000,45,40,"F5",5,1,"Cette annonce est très belle","Une belle annonce","static/TestFrontImages/test_image_1.jpg", "pap.fr123456789"]], [["http://www.google.fr"]]
+            #n_uplets, links = [[5000,45,40,"F5",5,75001,"Cette annonce est très belle","Une belle annonce",["static/TestFrontImages/test_image_1.jpg"], "pap.fr123456789"]], [["http://www.google.fr"]]
 
-            for k in range(len(n_uplets)):
-                n_uplet = n_uplets[k]
-                link = links[k]
+            if site == "century21.fr":
+                my_generator = scrapp_all_century_21
+            elif site == "pap.fr":
+                my_generator = scrapp_all_pap
+
+            for n_uplet, link in my_generator():
 
                 database_entry = {
                     "title": n_uplet[7],
                     "link": link,
                     "surface": n_uplet[1],
                     "rooms": n_uplet[4],
-                    "location": "Arrondissement : " + str(n_uplet[5]),
+                    "location": n_uplet[5],
                     "price": n_uplet[0],
                     "agency": site,
                     "text": n_uplet[6],

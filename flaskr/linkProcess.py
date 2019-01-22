@@ -67,7 +67,7 @@ class LinkProcess:
             "price" : 9999999,
             "agency": "Century 42",
             "text": "Ceci est une annonce de type attractive.",
-            "image": "/static/TestFrontImages/test_image_1.jpg"
+            "image": ["/static/TestFrontImages/test_image_1.jpg"]
 
         }
         result2 = {
@@ -80,7 +80,7 @@ class LinkProcess:
             "price": 9999999,
             "agency": "P.u.P",
             "text": "Ceci est une annonce de type attractive mais pas top.",
-            "image": "/static/TestFrontImages/test_image_2.jpg"
+            "image": ["/static/TestFrontImages/test_image_2.jpg"]
         }
 
 

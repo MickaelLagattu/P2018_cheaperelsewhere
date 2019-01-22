@@ -50,7 +50,7 @@ def scrapp_all_pap():
         for element in page_links:
             a = scrapp_pap(element)
             time.sleep(1)
-            return a
+            yield a, element
 
 
 def search_links_pap(url):

@@ -23,7 +23,7 @@ def scrapp_all_century_21():
     while a != None:
         l = search_links_century_21(url_page)
         for element in l:
-            scrapp_century21(element)
+            yield scrapp_century21(element), element
             time.sleep(1)
         i += 1
         time.sleep(1)
