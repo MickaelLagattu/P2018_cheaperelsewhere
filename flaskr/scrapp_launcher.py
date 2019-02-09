@@ -22,7 +22,7 @@ class Scrapper(Thread):
         """Destructor"""
         self.__scrap_log.close()
 
-    def start(self):
+    def run(self):
         """Launches the scrapping process regularly. Must be called at server startup"""
 
         self.__scrapp_all()

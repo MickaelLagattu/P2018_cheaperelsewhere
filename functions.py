@@ -52,6 +52,7 @@ def get_objects(image, path=data_path + "detection_output/raw/"):
         f.close()
         t2 = time.time()
         print("Time spent: ", t2 - t1, "\n")
+        return set([dico['name'] for dico in eval(str(objects))])
 
 
 def array(x):
@@ -61,6 +62,8 @@ def array(x):
 def jaccard(image1, image2):
     intersection=get_objects(image1) & get_objects(image2)
     union = get_objects(image1) | get_objects(image2)
+    if len(union)==0:
+        return 0
     return len(intersection)/len(union)
 
 

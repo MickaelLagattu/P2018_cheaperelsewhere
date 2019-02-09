@@ -19,7 +19,7 @@ class histogram:
         self.image2=image2
 
     def correlation(self):
-        image1, image2= data_path + self.image1, data_path + self.image2
+        image1, image2= self.image1, self.image2
 
         filenames = [image1, image2]
         index = {}
@@ -51,6 +51,8 @@ class histogram:
 "Structural Similarity Index Measure"
 class SSIM:
     def __init__(self,image1,image2):
+        print("image1 : ", image1)
+        print("image2 : ", image2)
         self.image1, self.image2 = cv2.imread(image1), cv2.imread(image2)
 
         self.image1 = cv2.cvtColor(self.image1, cv2.COLOR_BGR2GRAY)
@@ -68,25 +70,7 @@ class SSIM:
         s = compare_ssim(image1, image2)
         return (s,m)
 
-class detection:
-    def __init__(self, image):
-        self.image=image
-        self.execution_path = data_path
-        self.path = ""
-        self.detector = ObjectDetection()
-        self.detector.setModelTypeAsRetinaNet()
-        self.detector.setModelPath(os.path.join(self.execution_path, "resnet50_coco_best_v2.0.1.h5"))
-        self.detector.loadModel()
 
-    def getObjects(self):
-        print(self.path)
-        objects = self.detector.detectObjectsFromImage(input_image=os.path.join(self.execution_path, self.path + self.image),
-                                                        output_image_path=os.path.join(self.execution_path,
-                                                                                    self.path+"detection_output/" + "new" + self.image[:-4]))
-        # for eachObject in objects:
-        #     print(eachObject["name"], " : ", eachObject["percentage_probability"])
-
-        return objects
 
 
 
@@ -115,7 +99,7 @@ if  __name__ == "__main__":
     "test SSIM"
     print("\nTest SSIM")
     image1 = data_path + "with_logo.jpg"
-    image2 = data_path +"without_logo.jpg"
+    image2 = data_path + "without_logo.jpg"
     print("(SSIM, MSE) : ", SSIM(image1, image2).compare_images())
 
 
