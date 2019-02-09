@@ -19,13 +19,14 @@ class histogram:
         self.image2=image2
 
     def correlation(self):
-        image1, image2= self.image1, self.image2
+        image1, image2= data_path + self.image1, data_path + self.image2
 
         filenames = [image1, image2]
         index = {}
         images = {}
         reference = filenames[0]
         for filename in filenames:
+            print(filename)
             image = cv2.imread(filename)
             images[filename] = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             hist = cv2.calcHist([image], [0, 1, 2], None, [8, 8, 8], [0, 256, 0, 256, 0, 256])
