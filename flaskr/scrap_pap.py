@@ -45,6 +45,11 @@ from random import uniform
 #    time.sleep(3)
 #
 # print(links)
+
+
+headers = {
+"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36 OPR/58.0.3135.53"
+}
 def scrapp_all_pap():
     url_base = "https://www.pap.fr/annonce/vente-appartement-maison-paris-75-g439-"
     for i in range(21):
@@ -52,12 +57,12 @@ def scrapp_all_pap():
         time.sleep(2)
         for element in page_links:
             a = scrapp_pap(element)
-            time.sleep(uniform(0.6, 2.5))
+            time.sleep(uniform(20, 60))
             yield a, element
 
 
 def search_links_pap(url):
-    req = requests.get(url)
+    req = requests.get(url, headers=headers)
     soup = BeautifulSoup(req.text, "lxml")
     a = soup.findAll("a", {"class": ["img-liquid", "item-thumb "]})
     page_links = []
