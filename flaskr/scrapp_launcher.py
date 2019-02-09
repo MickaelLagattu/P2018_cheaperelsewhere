@@ -4,6 +4,10 @@
 
 from threading import Thread
 import schedule
+from .global_comparator import GlobalComparator
+from .Scrapp import scrapp_all_century_21
+from .scrap_pap import scrapp_all_pap
+
 
 class Scrapper(Thread):
     """Class that launches the scrapping process regularly, with comparisons and database updates"""
@@ -12,7 +16,7 @@ class Scrapper(Thread):
         """Constructor, mongo is the mongodb object"""
         Thread.__init__(self)
         self.__mongo = mongo
-        self.__scrap_log = open("log/scrap.log", "w")
+        self.__scrap_log = open("scrap.log", "w")
 
     def __del__(self):
         """Destructor"""
@@ -30,32 +34,38 @@ class Scrapper(Thread):
 
         self.__scrap_log.write("Launching scrapper\n")
 
-        sites = ["machin", "truc"] # The list of sites to be scrapped
+        sites = ["century21.fr", "pap.fr"] # The list of sites to be scrapped
 
         for site in sites:
             #n_uplets, liens = la commande pour scrapper ce site. Doit renvoyer une liste de n_uplets et la liste des liens correspondants
-            n_uplets, links = [[5000,45,40,"F5",5,1,"Cette annonce est très belle","Une belle annonce","static/TestFrontImages/test_image_1.jpg"]], [["http://www.google.fr"]]
+            #n_uplets, links = [[5000,45,40,"F5",5,75001,"Cette annonce est très belle","Une belle annonce",["static/TestFrontImages/test_image_1.jpg"], "pap.fr123456789"]], [["http://www.google.fr"]]
 
-            for k in range(len(n_uplets)):
-                n_uplet = n_uplets[k]
-                link = links[k]
+            if site == "century21.fr":
+                my_generator = scrapp_all_century_21
+            elif site == "pap.fr":
+                my_generator = scrapp_all_pap
 
-                #Comparisons
-                similar = []
-                #Là il faut remplir "similar" avec les annonces similaires à l'annonce en cours de traitement
+            for n_uplet, link in my_generator():
 
                 database_entry = {
                     "title": n_uplet[7],
                     "link": link,
-                    "surface": n_uplet[2],
+                    "surface": n_uplet[1],
                     "rooms": n_uplet[4],
-                    "location": "Arrondissement : " + str(n_uplet[5]),
+                    "location": n_uplet[5],
                     "price": n_uplet[0],
                     "agency": site,
                     "text": n_uplet[6],
                     "image": n_uplet[8],
-                    "similar": similar
+                    "similar": [],
+                    "site_id": n_uplet[9]
                 }
+
+
+                #Comparisons
+                similar = GlobalComparator.get_similar(self.__mongo, database_entry)
+
+                database_entry['similar'] = similar
                 self.__mongo.db.ads.insert_one(database_entry)
                 self.__scrap_log.write("New entry : " + str(database_entry) + "\n")
 

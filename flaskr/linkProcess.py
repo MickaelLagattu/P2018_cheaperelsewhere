@@ -1,30 +1,60 @@
 
-
 class LinkProcess:
     """Class that will be used to receive the link sent by the user and return the results from the DB"""
 
     @staticmethod
-    def process(link, database):
+    def process(link, mongo):
         """Search for similar announces in the DB and returns the results"""
 
+        #Find the website
+        splitted_link = link.split('.')
+        site = None
+        try:
+            nom_site = splitted_link[-2]
+            terminaison = ''
+            i = 0
+            while i < len(splitted_link[-1]):
+                if splitted_link[-1][i] not in "abcdefghijklmnopqrstuvwxyz":
+                    break
+                terminaison += splitted_link[-1][i]
+                i += 1
+
+            site = nom_site + '.' + terminaison
+
+            #find the reference depending on the site
+            if site == "century21.fr":
+                link_without_arguments = link.split('?')[0]
+                splitted = link_without_arguments.split('/')
+                site_id = splitted[-2]
+            elif site == "pap.fr":
+                link_without_arguments = link.split('?')[0]
+                splitted = link_without_arguments.split('-')
+                site_id = splitted[-1]
+            else:
+                return []
+        except:
+            return []
+
+        final_site_id = site + site_id
+
         #Find this ad in our db
-        ad_in_db = database.mongo.db.ads.find({'link': link})
-        if len(ad_in_db) == 0:
-            return {}
+        ad_in_db = mongo.db.ads.find({'site_id': final_site_id})
+        if ad_in_db.count() == 0:
+            return []
         else:
             ad = ad_in_db[0]
 
             #Get similar ads
             similar = ad['similar']
 
-            results = database.mongo.db.ads.find({'_id': {"$in" : similar}})
+            results = mongo.db.ads.find({'site_id': {"$in" : similar}})
 
 
 
-            return results
+            return list(results)
 
     @staticmethod
-    def process_test(link, database):
+    def process_test(link, mongo):
         """Same but with fake results to test front"""
 
         result1 = {
@@ -37,7 +67,7 @@ class LinkProcess:
             "price" : 9999999,
             "agency": "Century 42",
             "text": "Ceci est une annonce de type attractive.",
-            "image": "/static/TestFrontImages/test_image_1.jpg"
+            "image": ["/static/TestFrontImages/test_image_1.jpg"]
 
         }
         result2 = {
@@ -50,7 +80,7 @@ class LinkProcess:
             "price": 9999999,
             "agency": "P.u.P",
             "text": "Ceci est une annonce de type attractive mais pas top.",
-            "image": "/static/TestFrontImages/test_image_2.jpg"
+            "image": ["/static/TestFrontImages/test_image_2.jpg"]
         }
 
 
