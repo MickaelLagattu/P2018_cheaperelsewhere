@@ -61,19 +61,24 @@ class GlobalComparator:
         weigh_price = 0.1
 
         #If a coeff is NC, the booleans will be false
+        image = True
         surface = True
         rooms = True
         price = True
 
         score_text = weight_text * TextScoring.get_score(ad1['text'],ad2["text"])
         max_score_image = 0
-        for image1 in ad1["image"] :
-            for image2 in ad2["image"] :
-                print("Comparaison d'image : ", image1)
-                print("avec", image2)
-                if imageComparator.global_score(image1, image2) > max_score_image:
-                    max_score_image = imageComparator.global_score(image1, image2)
-        score_image = weight_image*max_score_image
+        try:
+            for image1 in ad1["image"] :
+                for image2 in ad2["image"] :
+                    print("Comparaison d'image : ", image1)
+                    print("avec", image2)
+                    if imageComparator.global_score(image1, image2) > max_score_image:
+                        max_score_image = imageComparator.global_score(image1, image2)
+            score_image = weight_image*max_score_image
+        except:
+            score_image = 0
+            image = False
         if ad1["price"] != "NC" and ad2["price"] != "NC" :
             score_price = weigh_price * GlobalComparator.__relative_diff(ad1["price"], ad2["price"])
         else :
@@ -93,7 +98,7 @@ class GlobalComparator:
             surface = False
 
         # Rebalance of weights:
-        denominator = weight_text + weight_image + weight_surface*surface + weight_rooms*rooms + weigh_price*price
+        denominator = weight_text + weight_image * image + weight_surface*surface + weight_rooms*rooms + weigh_price*price
 
         score = (score_rooms + score_text + score_price + score_surface + score_image) / denominator
 
