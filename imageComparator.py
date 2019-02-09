@@ -74,20 +74,22 @@ class SSIM:
 
 
 
-def global_score(image1_name, image2_name):
-    image1 = data_path + image1_name
-    image2 = data_path + image2_name
+def global_score(image1, image2):
+    # image1 = "static/images/"+image1
+    # image2 = "static/images/"+image2
+
     try:
-        if functions.getSize(image1)==functions.getSize(image2):
+        if functions.getSize("static/images/"+image1)==functions.getSize("static/images/"+image2):
             if SSIM(image1, image2).compare_images()[0]>0.8:
                 return 1
-        if image1!=image2:
+        elif image1!=image2:
             if histogram(image1, image2).correlation()>0.95:
                 return 1
-        return (histogram(image1, image2).correlation() + functions.jaccard(image1, image2)) / 2
+        else: return (histogram(image1, image2).correlation() + functions.jaccard(image1, image2)) / 2
     except Exception as e:
         print(e)
         return (histogram(image1, image2).correlation() + functions.jaccard(image1, image2)) / 2
+    return 0
 
 
 
@@ -124,6 +126,3 @@ if  __name__ == "__main__":
     # print("")
     # image="century.jpg"
     # print(detection(image).getObjects())
-
-
-

@@ -64,7 +64,10 @@ class Scrapper(Thread):
                 print()
                 print("Database entry before comparison")
                 for key, value in database_entry.items():
-                    print(key, "--->", value)
+                    try :
+                        print(key, "--->", value)
+                    except UnicodeEncodeError:
+                        print("error in print")
                 print()
                 print()
 
@@ -82,4 +85,3 @@ class Scrapper(Thread):
                 if self.__mongo.db.ads.find({'site_id': n_uplet[9]}).count() == 0:
                     self.__mongo.db.ads.insert_one(database_entry)
                 self.__scrap_log.write("New entry : " + str(database_entry) + "\n")
-
