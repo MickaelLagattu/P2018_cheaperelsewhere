@@ -121,6 +121,12 @@ def scrapp_century21(url):
     site = "century21"
     identifiant = re.findall("/[0-9]{6,}/", url)
     site_identifiant = site + " " + identifiant[0][1:-1]
+    
+    
+    # extractions_images
+    identifiant_image = site+identifiant[0][1:-1]
+    for i,element in enumerate(liste_liens_images):
+        urllib.request.retrieve(element,"/static/images/"+identifiant_image + str(i))  
 
     return [prix_vente, surface_totale, surface_habitable, type_appartement, arrondissement, nombre_pieces,
             annonce_texte, titre, liste_liens_images, site_identifiant]

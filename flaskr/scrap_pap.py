@@ -142,7 +142,12 @@ def scrapp_pap(url):
     site = "pap"
     identifiant = re.findall("r[0-9]{7,}", url)
     site_identifiant = site + " " + identifiant[0]
-
+    
+    # extractions_images
+    identifiant_image = site+identifiant[0]
+    for i,element in enumerate(liste_liens_images):
+        urllib.request.retrieve(element,"/static/images/"+identifiant_image + str(i))  
+    
     return (prix, nombre_pieces, nombre_chambres, surface_totale, arrondissement, liste_liens_images, texte, titre,
             site_identifiant)
 
