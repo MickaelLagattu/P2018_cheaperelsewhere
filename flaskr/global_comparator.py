@@ -101,7 +101,7 @@ class GlobalComparator:
     def __relative_diff(v1, v2):
         """Computes the relative difference between 2 values"""
         try:
-            value = (v1 - v2)/v1
+            value = 1 - (v1 - v2)/v1
         except TypeError:
             value = 0
         return value
