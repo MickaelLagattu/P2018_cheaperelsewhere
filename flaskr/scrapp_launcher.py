@@ -27,7 +27,7 @@ class Scrapper(Thread):
 
         self.__scrapp_all()
 
-        schedule.every().day.at("00:00").do(self.__scrapp_all)
+        # schedule.every().day.at("00:00").do(self.__scrapp_all)
 
     def __scrapp_all(self):
         """Scrapps all the sites, must be called once a day"""
@@ -51,8 +51,8 @@ class Scrapper(Thread):
                     "title": n_uplet[7],
                     "link": link,
                     "surface": n_uplet[1],
-                    "rooms": n_uplet[4],
-                    "location": n_uplet[5],
+                    "rooms": n_uplet[5],
+                    "location": n_uplet[4],
                     "price": n_uplet[0],
                     "agency": site,
                     "text": n_uplet[6],

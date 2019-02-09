@@ -53,7 +53,7 @@ def create_app():
 
 
 
-    mongo.db.command('dropDatabase')
+    # mongo.db.command('dropDatabase')
 
     # Launching the scrapping
     scrapper = Scrapper(mongo)

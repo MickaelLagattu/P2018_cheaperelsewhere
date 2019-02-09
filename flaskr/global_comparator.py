@@ -30,9 +30,12 @@ class GlobalComparator:
             potential_similar = mongo.db.ads.find(
                 {'surface': {"$gt": surface_min, "$lt": surface_max}, 'agency': {'$ne': ad['agency']}})
         else:
-            potential_similar = list(mongo.db.ads.find({'agency': {'$ne': ad['agency']}}))
+            # Not enough info
+            potential_similar = []
+            # potential_similar = mongo.db.ads.find({'agency': {'$ne': ad['agency']}})
 
         similar = []
+        potential_similar = list(potential_similar)
         print("avec les annonces", potential_similar)
         for ad2 in potential_similar:
             if GlobalComparator.__compare(ad, ad2) >= threshold:
