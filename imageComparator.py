@@ -7,8 +7,8 @@ import functions
 
 
 
-data_path="/home/insight/PycharmProjects/cheapserGit/images"
-os.chdir(data_path)
+data_path="flaskr/static/images/"
+
 
 
 class histogram:
@@ -68,7 +68,7 @@ class SSIM:
 class detection:
     def __init__(self, image):
         self.image=image
-        self.execution_path = os.getcwd()
+        self.execution_path = data_path
         self.path = ""
         self.detector = ObjectDetection()
         self.detector.setModelTypeAsRetinaNet()
@@ -105,8 +105,8 @@ if  __name__ == "__main__":
 
     "test SSIM"
     print("\nTest SSIM")
-    image1 = "with_logo.jpg"
-    image2 = "without_logo.jpg"
+    image1 = data_path + "with_logo.jpg"
+    image2 = data_path +"without_logo.jpg"
     print("(SSIM, MSE) : ", SSIM(image1, image2).compare_images())
 
 
@@ -119,8 +119,8 @@ if  __name__ == "__main__":
     "Histogram test"
     print("\nTest Histogramme")
     files = []
-    for e in os.listdir():
-        if '.jpg' in e: files.append(e)
+    for e in os.listdir(data_path):
+        if '.jpg' in e: files.append(data_path+e)
     near_histo=dict()
     for i in range(len(files)):
         near_histo[files[i]]=set()

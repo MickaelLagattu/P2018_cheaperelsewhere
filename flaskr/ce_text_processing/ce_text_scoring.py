@@ -1,6 +1,6 @@
-from ce_text_processing import BoV, Word2Vec, PreprocessSentence
-import text_global_variables as tgv
-from read_txt import read_sentences_file
+from .ce_text_processing import BoV, Word2Vec, PreprocessSentence
+from . import text_global_variables as tgv
+from .read_txt import read_sentences_file
 
 class TextScoring():
     print("-- creating word2vec")

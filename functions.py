@@ -4,8 +4,8 @@ import time
 import urllib.request
 from PIL import Image
 
-data_path="/home/insight/PycharmProjects/cheapserGit/images"
-os.chdir(data_path)
+data_path="flaskr/static/images/"
+
 
 def parse(file):
     if file[-4:]=='.jpg': return file[:-4]
@@ -23,18 +23,19 @@ def save_image(link, output=None):
 
 def local_detection():
     for image in files:
-        if image not in os.listdir("detection_output/raw/"):
+        if image not in os.listdir(data_path + "detection_output/raw/"):
             t1 = time.time()
             objects=detection(image).getObjects()
             print(objects)
-            f=open("detection_output/raw/"+parse(image),"w")
+            f=open(data_path + "detection_output/raw/"+parse(image),"w")
             f.write(str(objects))
             f.close()
             t2=time.time()
             print("Time spent: ", t2-t1,"\n")
 
-def get_objects(image, path="detection_output/raw/"):
-    if parse(image) in os.listdir("detection_output/raw/"):
+
+def get_objects(image, path=data_path + "detection_output/raw/"):
+    if parse(image) in os.listdir(data_path + "detection_output/raw/"):
         f=open(path+parse(image), "r")
         line=f.readline()
         f.close()
@@ -43,28 +44,28 @@ def get_objects(image, path="detection_output/raw/"):
         t1 = time.time()
         objects = detection(image).getObjects()
         print(objects)
-        f = open("detection_output/raw/" + parse(image), "w")
+        f = open(data_path + "detection_output/raw/" + parse(image), "w")
         f.write(str(objects))
         f.close()
         t2 = time.time()
         print("Time spent: ", t2 - t1, "\n")
 
 
-
-
-
 def array(x):
     return 0
+
 
 def jaccard(image1, image2):
     intersection=get_objects(image1) & get_objects(image2)
     union = get_objects(image1) | get_objects(image2)
     return len(intersection)/len(union)
 
+
 def getSize(image):
     with Image.open(image) as img:
         width, height = img.size
     return (width, height)
+
 
 
 

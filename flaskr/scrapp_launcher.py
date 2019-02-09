@@ -65,7 +65,11 @@ class Scrapper(Thread):
                 #Comparisons
                 similar = GlobalComparator.get_similar(self.__mongo, database_entry)
 
+
+
                 database_entry['similar'] = similar
-                self.__mongo.db.ads.insert_one(database_entry)
+
+                if self.__mongo.db.ads.findall({'site_id': n_uplet[9]}).count() == 0:
+                    self.__mongo.db.ads.insert_one(database_entry)
                 self.__scrap_log.write("New entry : " + str(database_entry) + "\n")
 

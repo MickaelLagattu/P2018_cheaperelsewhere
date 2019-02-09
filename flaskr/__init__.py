@@ -60,7 +60,7 @@ def create_app():
     scrapper.start()
 
     # For test only : create fake bdd
-    FakeBDD.create_fake_bdd(mongo)
+    # FakeBDD.create_fake_bdd(mongo)
 
 
 
