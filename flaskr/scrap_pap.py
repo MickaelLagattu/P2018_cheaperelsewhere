@@ -14,6 +14,7 @@ import re
 
 import time
 import os
+from random import uniform
 
 
 # links=set()
@@ -51,7 +52,7 @@ def scrapp_all_pap():
         time.sleep(2)
         for element in page_links:
             a = scrapp_pap(element)
-            time.sleep(1)
+            time.sleep(uniform(0.6, 2.5))
             yield a, element
 
 
