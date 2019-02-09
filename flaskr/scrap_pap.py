@@ -13,6 +13,8 @@ import urllib
 import re
 
 import time
+import urllib
+
 
 
 # links=set()
@@ -145,9 +147,12 @@ def scrapp_pap(url):
     site_identifiant = site + " " + identifiant[0]
     
     # extractions_images
-    identifiant_image = site+identifiant[0]
-    for i,element in enumerate(liste_liens_images):
-        urllib.request.retrieve(element,"/static/images/"+identifiant_image + str(i))  
+    try:
+        identifiant_image = site+identifiant[0]
+        for i,element in enumerate(liste_liens_images):
+            urllib.request.urlretrieve(element,"/static/images/"+identifiant_image + str(i)) 
+    except HTTPError:
+        pass
     
     return (prix, nombre_pieces, nombre_chambres, surface_totale, arrondissement, liste_liens_images, texte, titre,
             site_identifiant)
