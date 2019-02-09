@@ -17,6 +17,7 @@ class GlobalComparator:
         place = ad['location']
         surface = ad['surface']
         site_id = ad['site_id']
+        print("Comparaison de l'annonce ", site_id)
         threshold = 0.9
         if type(surface) == int and place != 'NC':
             surface_min, surface_max = surface*0.8, surface*1.2
@@ -32,6 +33,7 @@ class GlobalComparator:
             potential_similar = mongo.db.ads.find()
 
         similar = []
+        print("avec les annonces", potential_similar)
         for ad2 in potential_similar:
             if GlobalComparator.__compare(ad, ad2) >= threshold:
                 similar.append(ad2["site_id"])
@@ -88,10 +90,18 @@ class GlobalComparator:
         # Rebalance of weights:
         denominator = weight_text + weight_image + weight_surface*surface + weight_rooms*rooms + weigh_price*price
 
-        return (score_rooms + score_text + score_price + score_surface + score_image) / denominator
+        score = (score_rooms + score_text + score_price + score_surface + score_image) / denominator
+
+        print("Comparaison", ad1['site_id'], "avec", ad2['site_id'], "score :", score)
+
+        return score
 
 
     @staticmethod
     def __relative_diff(v1, v2):
         """Computes the relative difference between 2 values"""
-        return abs(v1 - v2)/v1
+        try:
+            value = (v1 - v2)/v1
+        except TypeError:
+            value = 0
+        return value

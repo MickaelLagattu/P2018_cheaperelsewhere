@@ -8,6 +8,7 @@ Created on Fri Nov 30 10:11:56 2018
 
 from bs4 import BeautifulSoup
 import requests
+import urllib
 
 import re
 import time
@@ -114,16 +115,32 @@ def scrapp_century21(url):
     del liste_liens_images[0]
 
     for i in range(len(liste_liens_images)):
-        liste_liens_images[i] = "https://www.century21.com" + liste_liens_images[i]
+        liste_liens_images[i] = "https://www.century21.fr" + liste_liens_images[i]
 
     # site + identifiant à scrapper
 
     site = "century21"
     identifiant = re.findall("/[0-9]{6,}/", url)
     site_identifiant = site + " " + identifiant[0][1:-1]
+    
+    
+    # extractions_images
+
+    local_link_images = []
+
+    try :
+
+        identifiant_image = site+identifiant[0][1:-1]
+        for i,element in enumerate(liste_liens_images):
+            filename, _ = urllib.request.urlretrieve(element,"/static/images/"+identifiant_image + str(i))
+            local_link_images.append(filename)
+    except urllib.error.HTTPError:
+        pass
+
+
 
     return [prix_vente, surface_totale, surface_habitable, type_appartement, arrondissement, nombre_pieces,
-            annonce_texte, titre, liste_liens_images, site_identifiant]
+            annonce_texte, titre, local_link_images, site_identifiant]
     # except UnboundLocalError:
     # return [prix_vente,surface_totale,surface_habitable,type_appartement,annonce_texte,titre,liste_liens_images]
 
