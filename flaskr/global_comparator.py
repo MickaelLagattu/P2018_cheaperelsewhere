@@ -2,7 +2,7 @@ print("import text scoring")
 from ce_text_processing.ce_text_scoring import TextScoring
 print("text scoring imported ")
 
-from imageComparator import histogram,SSIM
+import imageComparator
 
 class GlobalComparator:
     """Class for comparisons of ads"""
@@ -57,15 +57,7 @@ class GlobalComparator:
         max_score_image = 0
         for image1 in ad1["image"] :
             for image2 in ad2["image"] :
-                image_ssim = SSIM(image1,image2)
-                image_score_ssim = image_ssim.compare_images()[1]
-                if max_score_image < image_score_ssim :
-                    max_score_image = image_score_ssim
-
-                image_hist = histogram(ad1["image"],ad2["image"])
-                image_score_hist = image_hist.correlation()
-                if max_score_image < image_score_hist :
-                    max_score_image = image_score_hist
+                if imageComparator.global_score(image1,image2)>max_score_image: max_score_image=imageComparator.global_score(image1,image2)
         score_image = weight_image*max_score_image
         if ad1["price"] != "NC" and ad2["price"] != "NC" :
             score_price = weigh_price * __compare_(ad1["price"],ad2["price"])
