@@ -52,6 +52,7 @@ def get_objects(image, path=data_path + "detection_output/raw/"):
         f.close()
         t2 = time.time()
         print("Time spent: ", t2 - t1, "\n")
+        return set([dico['name'] for dico in eval(str(objects))])
 
 
 def array(x):
