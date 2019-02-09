@@ -3,8 +3,10 @@ from imageai.Detection import ObjectDetection
 
 class detection:
     def __init__(self, image):
+        full_path = os.path.realpath(__file__)
+        path, filename = os.path.split(full_path)
         self.image=image
-        self.execution_path = os.getcwd()
+        self.execution_path = os.path.join(path, "flaskr/static/images/")
         self.path = ""
         self.detector = ObjectDetection()
         self.detector.setModelTypeAsRetinaNet()

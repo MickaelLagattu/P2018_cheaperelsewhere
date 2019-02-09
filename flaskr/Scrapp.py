@@ -12,6 +12,7 @@ import urllib
 
 import re
 import time
+import os
 
 
 def scrapp_all_century_21():
@@ -132,8 +133,8 @@ def scrapp_century21(url):
 
         identifiant_image = site+identifiant[0][1:-1]
         for i,element in enumerate(liste_liens_images):
-            filename, _ = urllib.request.urlretrieve(element,"/static/images/"+identifiant_image + str(i))
-            local_link_images.append(filename)
+            filename, _ = urllib.request.urlretrieve(element,"static/images/"+identifiant_image + str(i) + ".jpg")
+            local_link_images.append(os.path.basename(filename))
     except urllib.error.HTTPError:
         pass
 

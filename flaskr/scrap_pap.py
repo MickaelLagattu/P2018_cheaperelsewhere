@@ -13,6 +13,7 @@ import urllib
 import re
 
 import time
+import os
 
 
 # links=set()
@@ -149,8 +150,8 @@ def scrapp_pap(url):
     try:
         identifiant_image = site+identifiant[0]
         for i,element in enumerate(liste_liens_images):
-            filename, _ = urllib.request.urlretrieve(element,"/static/images/"+identifiant_image + str(i))
-            local_link_image.append(filename)
+            filename, _ = urllib.request.urlretrieve(element,"static/images/"+identifiant_image + str(i) + ".jpg")
+            local_link_images.append(os.path.basename(filename))
     except urllib.error.HTTPError:
         pass
     

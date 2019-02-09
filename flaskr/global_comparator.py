@@ -30,7 +30,7 @@ class GlobalComparator:
             potential_similar = mongo.db.ads.find(
                 {'surface': {"$gt": surface_min, "$lt": surface_max}})
         else:
-            potential_similar = mongo.db.ads.find()
+            potential_similar = list(mongo.db.ads.find())
 
         similar = []
         print("avec les annonces", potential_similar)
@@ -66,6 +66,8 @@ class GlobalComparator:
         max_score_image = 0
         for image1 in ad1["image"] :
             for image2 in ad2["image"] :
+                print("Comparaison d'image : ", image1)
+                print("avec", image2)
                 if imageComparator.global_score(image1, image2) > max_score_image:
                     max_score_image = imageComparator.global_score(image1, image2)
         score_image = weight_image*max_score_image
