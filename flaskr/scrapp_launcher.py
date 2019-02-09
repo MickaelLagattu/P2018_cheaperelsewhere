@@ -34,7 +34,7 @@ class Scrapper(Thread):
 
         self.__scrap_log.write("Launching scrapper\n")
 
-        sites = ["century21.fr", "pap.fr"] # The list of sites to be scrapped
+        sites = ["pap.fr","century21.fr"] # The list of sites to be scrapped
 
         for site in sites:
             #n_uplets, liens = la commande pour scrapper ce site. Doit renvoyer une liste de n_uplets et la liste des liens correspondants

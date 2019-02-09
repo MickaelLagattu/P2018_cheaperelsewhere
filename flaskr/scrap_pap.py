@@ -150,22 +150,15 @@ def scrapp_pap(url):
     try:
         identifiant_image = site+identifiant[0]
         for i,element in enumerate(liste_liens_images):
-            filename, _ = urllib.request.urlretrieve(element,"static/images/"+identifiant_image + str(i) + ".jpg")
+            filename, _ = urllib.request.urlretrieve("https://www.pap.fr/"+element,"static/images/"+identifiant_image + str(i) + ".jpg")
             local_link_image.append(os.path.basename(filename))
     except urllib.error.HTTPError:
         pass
-<<<<<<< HEAD
 
-    return (prix, nombre_pieces, nombre_chambres, surface_totale, arrondissement, local_link_image, texte, titre,
-            site_identifiant)
-
-=======
-    
     # return (prix, nombre_pieces, nombre_chambres, surface_totale, arrondissement, local_link_image, texte, titre,
     #         site_identifiant)
     return [prix, surface_totale, surface_totale, "T" + str(nombre_pieces), arrondissement, nombre_pieces,
             texte, titre, local_link_image, site_identifiant]
->>>>>>> 725b63630d29cb78bd97fb67c9444600f7b4feb8
 #    for i,element in enumerate(links) :
 #        req = requests.get(element)
 #        soup = BeautifulSoup(req.text,"lxml")
