@@ -4,7 +4,10 @@ import time
 import urllib.request
 from PIL import Image
 
-data_path="flaskr/static/images/"
+
+full_path = os.path.realpath(__file__)
+path, filename = os.path.split(full_path)
+data_path = os.path.join(path, "flaskr/static/images/")
 
 
 def parse(file):

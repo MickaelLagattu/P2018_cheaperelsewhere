@@ -7,7 +7,9 @@ import functions
 
 
 
-data_path="flaskr/static/images/"
+full_path = os.path.realpath(__file__)
+path, filename = os.path.split(full_path)
+data_path = os.path.join(path, "flaskr/static/images/")
 
 
 
