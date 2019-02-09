@@ -38,8 +38,9 @@ def local_detection():
 
 
 def get_objects(image, path=data_path + "detection_output/raw/"):
-    if parse(image) in os.listdir(data_path + "detection_output/raw/"):
-        f=open(path+parse(image), "r")
+    image_name = os.path.basename(image)
+    if parse(image_name) in os.listdir(data_path + "detection_output/raw/"):
+        f=open(path+parse(image_name), "r")
         line=f.readline()
         f.close()
         return set([dico['name'] for dico in eval(line)])
@@ -47,7 +48,7 @@ def get_objects(image, path=data_path + "detection_output/raw/"):
         t1 = time.time()
         objects = detection(image).getObjects()
         print(objects)
-        f = open(data_path + "detection_output/raw/" + parse(image), "w")
+        f = open(data_path + "detection_output/raw/" + parse(image_name), "w")
         f.write(str(objects))
         f.close()
         t2 = time.time()
