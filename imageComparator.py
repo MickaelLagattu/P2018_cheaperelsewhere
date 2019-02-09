@@ -27,7 +27,8 @@ class histogram:
         reference = filenames[0]
         for filename in filenames:
             print("Filename", filename)
-            image = cv2.imread(filename)
+            image = cv2.imread("static/images/"+filename)
+            print("ERROOOOOOOOOOOOOOOOR ",filename)
             images[filename] = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             hist = cv2.calcHist([image], [0, 1, 2], None, [8, 8, 8], [0, 256, 0, 256, 0, 256])
             hist = cv2.normalize(hist, hist)
