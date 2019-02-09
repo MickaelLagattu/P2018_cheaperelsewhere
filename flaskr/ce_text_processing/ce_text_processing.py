@@ -13,10 +13,10 @@ class Word2Vec:
     """
     def __init__(self, fname, nmax=5000):
         self.load_wordvec(fname, nmax)
-        self.word2id = {i:list(self.word2vec.keys()).index(i) for i in self.word2vec.keys()}
-        self.id2word = {v: k for k, v in self.word2id.items()}
+        # self.word2id = {i:list(self.word2vec.keys()).index(i) for i in self.word2vec.keys()}
+        # self.id2word = {v: k for k, v in self.word2id.items()}
         self.embeddings = np.array(self.word2vec.values())
-        print(len(self.id2word.keys()))
+        # print(len(self.id2word.keys()))
 
 
     def load_wordvec(self, fname, nmax):
