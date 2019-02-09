@@ -115,7 +115,7 @@ def scrapp_century21(url):
     del liste_liens_images[0]
 
     for i in range(len(liste_liens_images)):
-        liste_liens_images[i] = "https://www.century21.com" + liste_liens_images[i]
+        liste_liens_images[i] = "https://www.century21.fr" + liste_liens_images[i]
 
     # site + identifiant à scrapper
 
