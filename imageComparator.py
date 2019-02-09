@@ -26,7 +26,7 @@ class histogram:
         images = {}
         reference = filenames[0]
         for filename in filenames:
-            print("Filename" filename)
+            print("Filename", filename)
             image = cv2.imread(filename)
             images[filename] = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             hist = cv2.calcHist([image], [0, 1, 2], None, [8, 8, 8], [0, 256, 0, 256, 0, 256])
@@ -91,15 +91,21 @@ class detection:
 
 
 def global_score(image1, image2):
+    # image1 = "static/images/"+image1
+    # image2 = "static/images/"+image2
+
     try:
-        if functions.getSize(image1)==functions.getSize(image2):
-            if SSIM(image1, image2).compare_images()[0]>0.8: return 1
+        if functions.getSize("static/images/"+image1)==functions.getSize("static/images/"+image2):
+            if SSIM(image1, image2).compare_images()[0]>0.8:
+                return 1
         elif image1!=image2:
-            if histogram(image1, image2).correlation()>0.95: return 1
+            if histogram(image1, image2).correlation()>0.95:
+                return 1
         else: return (histogram(image1, image2).correlation() + functions.jaccard(image1, image2)) / 2
     except Exception as e:
         print(e)
         return (histogram(image1, image2).correlation() + functions.jaccard(image1, image2)) / 2
+    return 0
 
 
 
@@ -136,6 +142,3 @@ if  __name__ == "__main__":
     # print("")
     # image="century.jpg"
     # print(detection(image).getObjects())
-
-
-
