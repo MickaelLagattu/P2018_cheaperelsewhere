@@ -1,4 +1,7 @@
+print("import text scoring")
 from ce_text_processing.ce_text_scoring import TextScoring
+print("text scoring imported ")
+
 from imageComparator import histogram,SSIM
 
 class GlobalComparator:
@@ -9,7 +12,7 @@ class GlobalComparator:
     weight_surface = 0.25
     weight_rooms = 0.2
     weigh_price = 0.1
-    
+
     def __compare_(n1, n2):
         if n1 == n2 == 0 :
             return 0
