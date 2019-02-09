@@ -100,4 +100,8 @@ class GlobalComparator:
     @staticmethod
     def __relative_diff(v1, v2):
         """Computes the relative difference between 2 values"""
-        return abs(v1 - v2)/v1
+        try:
+            value = (v1 - v2)/v1
+        except TypeError:
+            value = 0
+        return value
