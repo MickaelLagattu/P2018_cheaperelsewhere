@@ -12,7 +12,6 @@ import urllib
 
 import re
 import time
-import urllib
 
 
 def scrapp_all_century_21():
@@ -128,14 +127,14 @@ def scrapp_century21(url):
     # extractions_images
 
     try :
-        
+
         identifiant_image = site+identifiant[0][1:-1]
         for i,element in enumerate(liste_liens_images):
             urllib.request.urlretrieve(element,"/static/images/"+identifiant_image + str(i))
-    except HTTPError:
+    except urllib.error.HTTPError:
         pass
 
-    
+
 
     return [prix_vente, surface_totale, surface_habitable, type_appartement, arrondissement, nombre_pieces,
             annonce_texte, titre, liste_liens_images, site_identifiant]
