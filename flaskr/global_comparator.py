@@ -1,8 +1,8 @@
+
+import imageComparator
 print("import text scoring")
 from .ce_text_processing.ce_text_scoring import TextScoring
 print("text scoring imported ")
-
-import imageComparator
 
 class GlobalComparator:
     """Class for comparisons of ads"""
