@@ -8,6 +8,7 @@ Created on Mon Jan 14 13:02:11 2019
 
 from bs4 import BeautifulSoup
 import requests
+import urllib
 
 import re
 
