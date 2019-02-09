@@ -3,18 +3,14 @@ import numpy as np
 import cv2
 from imageai.Detection import ObjectDetection
 import os
-
-
-data_path="/home/insight/PycharmProjects/cheaper_elsewhere/data/"
-histo_path=data_path+"images/test"
-SSIM_path=data_path+"images"
-detection_path=data_path+"images"
+import functions
 
 
 
+data_path="/home/insight/PycharmProjects/cheapserGit/images"
 os.chdir(data_path)
 
-"calcul de correlation par histogrammes : mesure globale"
+
 class histogram:
     def __init__(self,image1,image2):
         self.image1=image1
@@ -49,7 +45,7 @@ class histogram:
             results = sorted([(v, k) for (k, v) in results.items()], reverse=reverse)
             return results[1][0]
 
-"Structural Similarity Index Measure : mesure locale index par index"
+"Structural Similarity Index Measure"
 class SSIM:
     def __init__(self,image1,image2):
         self.image1, self.image2 = cv2.imread(image1), cv2.imread(image2)
@@ -80,22 +76,35 @@ class detection:
         self.detector.loadModel()
 
     def getObjects(self):
-
+        print(self.path)
         objects = self.detector.detectObjectsFromImage(input_image=os.path.join(self.execution_path, self.path + self.image),
-                                                     output_image_path=os.path.join(self.execution_path,
-                                                                                    self.path + "new" + self.image))
+                                                        output_image_path=os.path.join(self.execution_path,
+                                                                                    self.path+"detection_output/" + "new" + self.image[:-4]))
         # for eachObject in objects:
         #     print(eachObject["name"], " : ", eachObject["percentage_probability"])
 
         return objects
 
+
+
+def global_score(image1, image2):
+    try:
+        if functions.getSize(image1)==functions.getSize(image2):
+            if SSIM(image1, image2).compare_images()[0]>0.8: return 1
+        elif image1!=image2:
+            if histogram(image1, image2).correlation()>0.95: return 1
+        else: return (histogram(image1, image2).correlation() + functions.jaccard(image1, image2)) / 2
+    except Exception as e:
+        print(e)
+        return (histogram(image1, image2).correlation() + functions.jaccard(image1, image2)) / 2
+
+
+
 "test"
 if  __name__ == "__main__":
 
     "test SSIM"
-    print("")
-    os.chdir(SSIM_path)
-
+    print("\nTest SSIM")
     image1 = "with_logo.jpg"
     image2 = "without_logo.jpg"
     print("(SSIM, MSE) : ", SSIM(image1, image2).compare_images())
@@ -103,25 +112,27 @@ if  __name__ == "__main__":
 
     # print(SSIM(image1, image2))
     if SSIM(image1, image2).compare_images()[0] > 0.9:
-        print("Images similaires à un logo près")
+        print("Exactly the same images, possibly with a logo superposed : ", image1, "and", image2)
 
     print("")
 
-    "test histogramme"
-    os.chdir(histo_path)
+    "Histogram test"
+    print("\nTest Histogramme")
     files = []
     for e in os.listdir():
         if '.jpg' in e: files.append(e)
+    near_histo=dict()
     for i in range(len(files)):
+        near_histo[files[i]]=set()
         others=[e for e in files if e!=files[i]]
         for x in others:
-            if histogram(files[i],x).correlation()>=0.8: print("Match ! :",files[i],"et",x)
+            if histogram(files[i],x).correlation()>=0.8:
+                near_histo[files[i]].add(x)
+    print("Images with similar histograms : ",near_histo)
 
-    print("")
-    "test detection"
-    os.chdir(detection_path)
-    image="century.jpg"
-    print(detection(image).getObjects())
+    # print("")
+    # image="century.jpg"
+    # print(detection(image).getObjects())
 
 
 
