@@ -81,15 +81,25 @@ def global_score(image1, image2):
 
     try:
         if functions.getSize("static/images/"+image1)==functions.getSize("static/images/"+image2):
+            print(111)
             if SSIM(image1, image2).compare_images()[0]>0.8:
                 return 1
         elif image1!=image2:
+            print(222)
             if histogram(image1, image2).correlation()>0.95:
                 return 1
-        else: return (2*histogram(image1, image2).correlation() + 0*functions.jaccard(image1, image2)) / 2
+        else:
+            print(333)
+            h=histogram(image1, image2).correlation()
+            j=functions.jaccard(image1, image2)
+            return (2*h + 0*j) / 2
     except Exception as e:
+        print(444)
         print(e)
-        return (2*histogram(image1, image2).correlation() + 0*functions.jaccard(image1, image2)) / 2
+        h = histogram(image1, image2).correlation()
+        j = functions.jaccard(image1, image2)
+        return (2 * h + 0 * j) / 2
+
     print("On ne devrait pas être là")
     return 0
 
