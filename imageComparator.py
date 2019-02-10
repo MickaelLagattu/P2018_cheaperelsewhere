@@ -86,12 +86,12 @@ def global_score(image1, image2):
         elif image1!=image2:
             if histogram(image1, image2).correlation()>0.95:
                 return 1
-        else: return (histogram(image1, image2).correlation() + functions.jaccard(image1, image2)) / 2
+        else: return (2*histogram(image1, image2).correlation() + 0*functions.jaccard(image1, image2)) / 2
     except Exception as e:
         print(e)
-        return (histogram(image1, image2).correlation() + functions.jaccard(image1, image2)) / 2
+        return (2*histogram(image1, image2).correlation() + 0*functions.jaccard(image1, image2)) / 2
+    print("On ne devrait pas être là")
     return 0
-
 
 
 "test"

@@ -60,13 +60,11 @@ class GlobalComparator:
         weight_image = 0.4
         weight_surface = 0.25
         weight_rooms = 0.2
-        weigh_price = 0.1
 
         #If a coeff is NC, the booleans will be false
         image = True
         surface = True
         rooms = True
-        price = True
 
         score_text = weight_text * TextScoring.get_score(ad1['text'],ad2["text"])
         max_score_image = 0
@@ -75,34 +73,38 @@ class GlobalComparator:
                 for image2 in ad2["image"] :
                     print("Comparaison d'image : ", image1)
                     print("avec", image2)
-                    if imageComparator.global_score(image1, image2) > max_score_image:
+                    this_score = imageComparator.global_score(image1, image2)
+                    print("score : ", this_score)
+                    if this_score > max_score_image:
                         max_score_image = imageComparator.global_score(image1, image2)
             score_image = weight_image*max_score_image
+            print("score final image : ", score_image)
         except:
+            print("No image score")
             score_image = 0
             image = False
-        if ad1["price"] != "NC" and ad2["price"] != "NC" :
-            score_price = weigh_price * GlobalComparator.__relative_diff(ad1["price"], ad2["price"])
-        else :
-            score_price = 0
-            price = False
 
         if ad1["rooms"] != "NC" and ad2["rooms"] != "NC" :
             score_rooms = weight_rooms * GlobalComparator.__relative_diff(ad1["rooms"], ad2["rooms"])
+            print("Score rooms :", score_rooms)
         else :
+            print("No score rooms")
             score_rooms = 0
             rooms = False
 
         if ad1["surface"] != "NC" and ad2["surface"] != "NC" :
             score_surface = weight_surface * GlobalComparator.__relative_diff(ad1["surface"], ad2["surface"])
+            print("Score surface :", score_surface)
         else :
+            print("No score surface")
             score_surface = 0
             surface = False
 
         # Rebalance of weights:
-        denominator = weight_text + weight_image * image + weight_surface*surface + weight_rooms*rooms + weigh_price*price
+        denominator = weight_text + weight_image * image + weight_surface*surface + weight_rooms*rooms
+        print("Denominator :", denominator)
 
-        score = (score_rooms + score_text + score_price + score_surface + score_image) / denominator
+        score = (score_rooms + score_text  + score_surface + score_image) / denominator
 
         print("Comparaison", ad1['site_id'], "avec", ad2['site_id'], "score :", score)
 
@@ -113,7 +115,8 @@ class GlobalComparator:
     def __relative_diff(v1, v2):
         """Computes the relative difference between 2 values"""
         try:
-            value = 1 - (v1 - v2)/v1
-        except TypeError:
+            value = 1 - abs(int(v1) - int(v2))/int(v1)
+        except (TypeError, ValueError) as e:
+            print(e)
             value = 0
         return value
