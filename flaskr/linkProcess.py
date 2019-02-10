@@ -6,6 +6,8 @@ class LinkProcess:
     def process(link, mongo):
         """Search for similar announces in the DB and returns the results"""
 
+        print("Lien :", link)
+
         #Find the website
         splitted_link = link.split('.')
         site = None
@@ -35,11 +37,14 @@ class LinkProcess:
         except:
             return []
 
-        final_site_id = site + site_id
+        final_site_id = site.split(".")[0] + " " + site_id
+
+        print("Site id : ", final_site_id)
 
         #Find this ad in our db
         ad_in_db = mongo.db.ads.find({'site_id': final_site_id})
         if ad_in_db.count() == 0:
+            print("Not in DB")
             return []
         else:
             ad = ad_in_db[0]
@@ -48,6 +53,9 @@ class LinkProcess:
             similar = ad['similar']
 
             results = mongo.db.ads.find({'site_id': {"$in" : similar}})
+
+            ads_found = [x["site_id"] for x in results]
+            print(ads_found)
 
 
 

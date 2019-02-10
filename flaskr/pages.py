@@ -47,7 +47,9 @@ class ResultPage(AbstractPage):
                 # Send the link to another part of the program for processing
                 #results = LinkProcess.process_test(link, mongo)
                 results = LinkProcess.process(link, mongo)
+                print("Resultats : ", results)
                 if len(results) > 0:
+                    print("Affichage du bon template")
                     return render_template("results_with_bootstrap.html", results=results, nb_results=len(results))
                 else:
                     return render_template("no_result.html")
