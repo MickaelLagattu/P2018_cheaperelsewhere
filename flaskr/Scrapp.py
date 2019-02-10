@@ -18,16 +18,19 @@ import os
 def scrapp_all_century_21():
     pre_url_page = "https://www.century21.fr/annonces/achat-appartement/d-75_paris/s-0-/st-0-/b-0-/page-"
     i = 1
-    url_page = pre_url_page + str(i) + "/"
-    req = requests.get(url_page)
-    soup = BeautifulSoup(req.text, "lxml")
-    a = soup.find_all("div", "zone-photo-exclu")
+    a = True # Pour entrer dans la boucle
     while a != None:
+        url_page = pre_url_page + str(i) + "/"
+        req = requests.get(url_page)
+        soup = BeautifulSoup(req.text, "lxml")
+        a = soup.find_all("div", "zone-photo-exclu")
+
         l = search_links_century_21(url_page)
         for element in l:
             yield scrapp_century21(element), element
             time.sleep(0.2)
         i += 1
+        print("-----------Page :", i, "-----------")
         time.sleep(0.2)
 
 

@@ -14,6 +14,7 @@ import re
 
 import time
 import os
+from random import uniform
 
 
 # links=set()
@@ -44,19 +45,25 @@ import os
 #    time.sleep(3)
 #
 # print(links)
+
+
+headers = {
+"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36 OPR/58.0.3135.53"
+}
 def scrapp_all_pap():
     url_base = "https://www.pap.fr/annonce/vente-appartement-maison-paris-75-g439-"
-    for i in range(21):
+    for i in range(1,21):
+        print("-----------Page :", i, "-----------")
         page_links = search_links_pap(url_base + str(i))
         time.sleep(2)
         for element in page_links:
             a = scrapp_pap(element)
-            time.sleep(1)
+            time.sleep(uniform(3, 6))
             yield a, element
 
 
 def search_links_pap(url):
-    req = requests.get(url)
+    req = requests.get(url, headers=headers)
     soup = BeautifulSoup(req.text, "lxml")
     a = soup.findAll("a", {"class": ["img-liquid", "item-thumb "]})
     page_links = []
@@ -150,8 +157,12 @@ def scrapp_pap(url):
     try:
         identifiant_image = site+identifiant[0]
         for i,element in enumerate(liste_liens_images):
-            filename, _ = urllib.request.urlretrieve("https://www.pap.fr/"+element,"static/images/"+identifiant_image + str(i) + ".jpg")
-            local_link_image.append(os.path.basename(filename))
+            if element[0:4] == "http":
+                filename, _ = urllib.request.urlretrieve(element,"static/images/"+identifiant_image + str(i) + ".jpg")
+                local_link_image.append(os.path.basename(filename))
+            else:
+                filename, _ = urllib.request.urlretrieve("https://www.pap.fr/"+element,"static/images/"+identifiant_image + str(i) + ".jpg")
+                local_link_image.append(os.path.basename(filename))
     except urllib.error.HTTPError:
         pass
 

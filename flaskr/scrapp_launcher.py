@@ -5,8 +5,8 @@
 from threading import Thread
 import schedule
 from .global_comparator import GlobalComparator
-from .Scrapp import scrapp_all_century_21
-from .scrap_pap import scrapp_all_pap
+from .Scrapp import scrapp_all_century_21, scrapp_century21
+from .scrap_pap import scrapp_all_pap, scrapp_pap
 
 
 class Scrapper(Thread):
@@ -34,7 +34,7 @@ class Scrapper(Thread):
 
         self.__scrap_log.write("Launching scrapper\n")
 
-        sites = ["pap.fr","century21.fr"] # The list of sites to be scrapped
+        sites = ["pap.fr", "century21.fr"] # The list of sites to be scrapped
 
         for site in sites:
             #n_uplets, liens = la commande pour scrapper ce site. Doit renvoyer une liste de n_uplets et la liste des liens correspondants
@@ -85,3 +85,94 @@ class Scrapper(Thread):
                 if self.__mongo.db.ads.find({'site_id': n_uplet[9]}).count() == 0:
                     self.__mongo.db.ads.insert_one(database_entry)
                 self.__scrap_log.write("New entry : " + str(database_entry) + "\n")
+
+
+    def scrap_one_c21(self, link):
+        """Fuunction that scraps one ad from given link. Only for testing."""
+        n_uplet = scrapp_century21(link)
+        site = "century21"
+
+        database_entry = {
+            "title": n_uplet[7],
+            "link": link,
+            "surface": n_uplet[1],
+            "rooms": n_uplet[5],
+            "location": n_uplet[4],
+            "price": n_uplet[0],
+            "agency": site,
+            "text": n_uplet[6],
+            "image": n_uplet[8],
+            "similar": [],
+            "site_id": n_uplet[9]
+        }
+
+
+        print()
+        print("Database entry before comparison")
+        for key, value in database_entry.items():
+            try:
+                print(key, "--->", value)
+            except UnicodeEncodeError:
+                 print("error in print")
+        print()
+        print()
+
+        # Comparisons
+        similar = GlobalComparator.get_similar(self.__mongo, database_entry)
+
+        database_entry['similar'] = similar
+        print("Final similar list : ")
+        print(*similar, sep='\n')
+        print()
+
+        if self.__mongo.db.ads.find({'site_id': n_uplet[9]}).count() == 0:
+            self.__mongo.db.ads.insert_one(database_entry)
+        else:
+            print("Already in database")
+        self.__scrap_log.write("New entry : " + str(database_entry) + "\n")
+
+
+
+    def scrap_one_pap(self, link):
+        """Function that scraps one ad from given link. Only for testing."""
+        n_uplet = scrapp_pap(link)
+        site = "pap"
+
+        database_entry = {
+            "title": n_uplet[7],
+            "link": link,
+            "surface": n_uplet[1],
+            "rooms": n_uplet[5],
+            "location": n_uplet[4],
+            "price": n_uplet[0],
+            "agency": site,
+            "text": n_uplet[6],
+            "image": n_uplet[8],
+            "similar": [],
+            "site_id": n_uplet[9]
+        }
+
+
+        print()
+        print("Database entry before comparison")
+        for key, value in database_entry.items():
+            try:
+                 print(key, "--->", value)
+            except UnicodeEncodeError:
+                 print("error in print")
+        print()
+        print()
+
+        # Comparisons
+        similar = GlobalComparator.get_similar(self.__mongo, database_entry)
+
+        database_entry['similar'] = similar
+        print("Final similar list : ")
+        print(*similar, sep='\n')
+        print()
+
+        if self.__mongo.db.ads.find({'site_id': n_uplet[9]}).count() == 0:
+            self.__mongo.db.ads.insert_one(database_entry)
+        else:
+            print("Already in database")
+        self.__scrap_log.write("New entry : " + str(database_entry) + "\n")
