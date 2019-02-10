@@ -66,7 +66,7 @@ class GlobalComparator:
         surface = True
         rooms = True
 
-        score_text = weight_text * TextScoring.get_score(ad1['text'],ad2["text"])
+
         max_score_image = 0
         try:
             for image1 in ad1["image"] :
@@ -77,15 +77,18 @@ class GlobalComparator:
                     print("score : ", this_score)
                     if this_score > max_score_image:
                         max_score_image = imageComparator.global_score(image1, image2)
-            score_image = weight_image*max_score_image
+            score_image = max_score_image
             print("score final image : ", score_image)
         except:
             print("No image score")
             score_image = 0
             image = False
 
+        score_text = TextScoring.get_score(ad1['text'], ad2["text"])
+        print("Score texte : ", score_text)
+
         if ad1["rooms"] != "NC" and ad2["rooms"] != "NC" :
-            score_rooms = weight_rooms * GlobalComparator.__relative_diff(ad1["rooms"], ad2["rooms"])
+            score_rooms = GlobalComparator.__relative_diff(ad1["rooms"], ad2["rooms"])
             print("Score rooms :", score_rooms)
         else :
             print("No score rooms")
@@ -93,7 +96,7 @@ class GlobalComparator:
             rooms = False
 
         if ad1["surface"] != "NC" and ad2["surface"] != "NC" :
-            score_surface = weight_surface * GlobalComparator.__relative_diff(ad1["surface"], ad2["surface"])
+            score_surface = GlobalComparator.__relative_diff(ad1["surface"], ad2["surface"])
             print("Score surface :", score_surface)
         else :
             print("No score surface")
@@ -104,7 +107,7 @@ class GlobalComparator:
         denominator = weight_text + weight_image * image + weight_surface*surface + weight_rooms*rooms
         print("Denominator :", denominator)
 
-        score = (score_rooms + score_text  + score_surface + score_image) / denominator
+        score = (score_rooms * weight_rooms + score_text * weight_text + score_surface * weight_surface + score_image * weight_image) / denominator
 
         print("Comparaison", ad1['site_id'], "avec", ad2['site_id'], "score :", score)
 
@@ -114,8 +117,21 @@ class GlobalComparator:
     @staticmethod
     def __relative_diff(v1, v2):
         """Computes the relative difference between 2 values"""
+        s1 = ""
+        s2 = ""
+        for c in str(v1):
+            if c in "0123456789.,":
+                s1 += c
+            else:
+                break
+        for c in str(v2):
+            if c in "0123456789.,":
+                s2 += c
+            else:
+                break
+
         try:
-            value = 1 - abs(int(v1) - int(v2))/int(v1)
+            value = 1 - abs(float(s1) - float(s2))/float(s1)
         except (TypeError, ValueError) as e:
             print(e)
             value = 0
