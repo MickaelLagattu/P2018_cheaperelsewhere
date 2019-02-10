@@ -8,7 +8,7 @@ class LinkProcess:
     def process(link, mongo):
         """Search for similar announces in the DB and returns the results"""
 
-        print("Lien :", link)
+        # print("Lien :", link)
 
         #Find the website
         splitted_link = link.split('.')
@@ -59,11 +59,11 @@ class LinkProcess:
             list_results = []
 
             for x in results:
-                print("Appending", x['site_id'])
+                # print("Appending", x['site_id'])
                 list_results.append(x)
-                print("len : ", len(list_results))
+                # print("len : ", len(list_results))
 
-            print(url_for('static', filename='images/' + list_results[0]['image'][0]))
+            # print(url_for('static', filename='images/' + list_results[0]['image'][0]))
 
             return list_results
 

@@ -25,14 +25,14 @@ class Scrapper(Thread):
     def run(self):
         """Launches the scrapping process regularly. Must be called at server startup"""
 
-        # self.__scrapp_all()
+        self.__scrapp_all()
 
-        # schedule.every().day.at("00:00").do(self.__scrapp_all)
+        schedule.every().day.at("00:00").do(self.__scrapp_all)
 
         # Tests de scrap d'1 annonce à la fois
-        self.__scrap_one_pap("https://www.pap.fr/annonces/appartement-paris-13e-r423901287")
+        # self.__scrap_one_pap("https://www.pap.fr/annonces/appartement-paris-13e-r423901287")
         # self.__scrap_one_pap("https://www.pap.fr/annonce/vente-appartement-maison-paris-13e-g37780-r406502686")
-        self._scrap_one_c21("https://www.century21.fr/trouver_logement/detail/1768710414/?came_from=/annonces/achat-maison-appartement/cp-75013/s-0-/st-0-/b-0-/page-1/")
+        # self._scrap_one_c21("https://www.century21.fr/trouver_logement/detail/1768710414/?came_from=/annonces/achat-maison-appartement/cp-75013/s-0-/st-0-/b-0-/page-1/")
 
     def __scrapp_all(self):
         """Scrapps all the sites, must be called once a day"""

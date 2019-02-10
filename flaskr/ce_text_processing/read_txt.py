@@ -8,7 +8,7 @@ def read_test_file(file_name:str) -> list :
             line_liste.append(line)
         except :
             continue
-    print(line_liste)
+    # print(line_liste)
     return line_liste
 
 def read_sentences_file(file_name:str) -> list :
@@ -20,5 +20,5 @@ def read_sentences_file(file_name:str) -> list :
             line_liste.append(line)
         except :
             continue
-    print(line_liste)
+    # print(line_liste)
     return line_liste

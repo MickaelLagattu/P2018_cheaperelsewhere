@@ -74,7 +74,7 @@ class GlobalComparator:
                     print("Comparaison d'image : ", image1)
                     print("avec", image2)
                     this_score = imageComparator.global_score(image1, image2)
-                    print("score : ", this_score)
+                    # print("score : ", this_score)
                     if this_score > max_score_image:
                         max_score_image = imageComparator.global_score(image1, image2)
             score_image = max_score_image
@@ -133,6 +133,6 @@ class GlobalComparator:
         try:
             value = 1 - abs(float(s1) - float(s2))/float(s1)
         except (TypeError, ValueError) as e:
-            print(e)
+            # print(e)
             value = 0
         return value
