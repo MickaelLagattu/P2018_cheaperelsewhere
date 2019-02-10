@@ -25,9 +25,13 @@ class Scrapper(Thread):
     def run(self):
         """Launches the scrapping process regularly. Must be called at server startup"""
 
-        self.__scrapp_all()
+        # self.__scrapp_all()
 
         # schedule.every().day.at("00:00").do(self.__scrapp_all)
+
+        # Tests de scrap d'1 annonce à la fois
+        self.__scrap_one_pap("https://www.pap.fr/annonces/appartement-paris-13e-r425401309")
+        # self._scrap_one_c21("")
 
     def __scrapp_all(self):
         """Scrapps all the sites, must be called once a day"""
@@ -87,10 +91,10 @@ class Scrapper(Thread):
                 self.__scrap_log.write("New entry : " + str(database_entry) + "\n")
 
 
-    def scrap_one_c21(self, link):
+    def _scrap_one_c21(self, link):
         """Fuunction that scraps one ad from given link. Only for testing."""
         n_uplet = scrapp_century21(link)
-        site = "century21"
+        site = "century21.fr"
 
         database_entry = {
             "title": n_uplet[7],
@@ -133,10 +137,10 @@ class Scrapper(Thread):
 
 
 
-    def scrap_one_pap(self, link):
+    def __scrap_one_pap(self, link):
         """Function that scraps one ad from given link. Only for testing."""
         n_uplet = scrapp_pap(link)
-        site = "pap"
+        site = "pap.fr"
 
         database_entry = {
             "title": n_uplet[7],

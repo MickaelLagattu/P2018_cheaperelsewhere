@@ -15,8 +15,8 @@ data_path = os.path.join(path, "flaskr/static/images/")
 
 class histogram:
     def __init__(self,image1,image2):
-        self.image1=image1
-        self.image2=image2
+        self.image1=data_path + image1
+        self.image2=data_path + image2
 
     def correlation(self):
         image1, image2= self.image1, self.image2
@@ -27,8 +27,7 @@ class histogram:
         reference = filenames[0]
         for filename in filenames:
             print("Filename", filename)
-            image = cv2.imread("static/images/"+filename)
-            print("ERROOOOOOOOOOOOOOOOR ",filename)
+            image = cv2.imread(filename)
             images[filename] = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             hist = cv2.calcHist([image], [0, 1, 2], None, [8, 8, 8], [0, 256, 0, 256, 0, 256])
             hist = cv2.normalize(hist, hist)
@@ -52,9 +51,10 @@ class histogram:
 "Structural Similarity Index Measure"
 class SSIM:
     def __init__(self,image1,image2):
+        print('SSIM')
         print("image1 : ", image1)
         print("image2 : ", image2)
-        self.image1, self.image2 = cv2.imread(image1), cv2.imread(image2)
+        self.image1, self.image2 = cv2.imread(data_path + image1), cv2.imread(data_path + image2)
 
         self.image1 = cv2.cvtColor(self.image1, cv2.COLOR_BGR2GRAY)
         self.image2 = cv2.cvtColor(self.image2, cv2.COLOR_BGR2GRAY)
@@ -99,8 +99,8 @@ if  __name__ == "__main__":
 
     "test SSIM"
     print("\nTest SSIM")
-    image1 = data_path + "with_logo.jpg"
-    image2 = data_path + "without_logo.jpg"
+    image1 = "with_logo.jpg"
+    image2 = "without_logo.jpg"
     print("(SSIM, MSE) : ", SSIM(image1, image2).compare_images())
 
 
@@ -114,7 +114,7 @@ if  __name__ == "__main__":
     print("\nTest Histogramme")
     files = []
     for e in os.listdir(data_path):
-        if '.jpg' in e: files.append(data_path+e)
+        if '.jpg' in e: files.append(e)
     near_histo=dict()
     for i in range(len(files)):
         near_histo[files[i]]=set()

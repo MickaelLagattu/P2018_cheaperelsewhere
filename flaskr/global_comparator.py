@@ -36,8 +36,10 @@ class GlobalComparator:
 
         similar = []
         potential_similar = list(potential_similar)
-        print("avec les annonces", potential_similar)
+        print("avec les annonces", [x['site_id'] for x in potential_similar])
         for ad2 in potential_similar:
+            print("First agency : ", ad['agency'])
+            print("second agency : ", ad['agency'])
             if GlobalComparator.__compare(ad, ad2) >= threshold:
                 similar.append(ad2["site_id"])
 
