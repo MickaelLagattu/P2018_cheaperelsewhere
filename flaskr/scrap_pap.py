@@ -157,8 +157,12 @@ def scrapp_pap(url):
     try:
         identifiant_image = site+identifiant[0]
         for i,element in enumerate(liste_liens_images):
-            filename, _ = urllib.request.urlretrieve("https://www.pap.fr/"+element,"static/images/"+identifiant_image + str(i) + ".jpg")
-            local_link_image.append(os.path.basename(filename))
+            if element[0:4] == "http":
+                filename, _ = urllib.request.urlretrieve(element,"static/images/"+identifiant_image + str(i) + ".jpg")
+                local_link_image.append(os.path.basename(filename))
+            else:
+                filename, _ = urllib.request.urlretrieve("https://www.pap.fr/"+element,"static/images/"+identifiant_image + str(i) + ".jpg")
+                local_link_image.append(os.path.basename(filename))
     except urllib.error.HTTPError:
         pass
 
