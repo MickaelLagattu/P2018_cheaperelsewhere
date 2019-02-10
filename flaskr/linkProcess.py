@@ -1,3 +1,5 @@
+from flask import url_for
+
 
 class LinkProcess:
     """Class that will be used to receive the link sent by the user and return the results from the DB"""
@@ -54,12 +56,16 @@ class LinkProcess:
 
             results = mongo.db.ads.find({'site_id': {"$in" : similar}})
 
-            ads_found = [x["site_id"] for x in results]
-            print(ads_found)
+            list_results = []
 
+            for x in results:
+                print("Appending", x['site_id'])
+                list_results.append(x)
+                print("len : ", len(list_results))
 
+            print(url_for('static', filename='images/' + list_results[0]['image'][0]))
 
-            return list(results)
+            return list_results
 
     @staticmethod
     def process_test(link, mongo):
