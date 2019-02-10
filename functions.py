@@ -37,8 +37,13 @@ def local_detection():
             print("Time spent: ", t2-t1,"\n")
 
 
-def get_objects(image, path=data_path + "detection_output/raw/"):
+def get_objects(image, path=data_path +"detection_output/raw/"):
     image_name = os.path.basename(image)
+    try:
+        os.makedirs(data_path+ "detection_output/raw/")
+    except:
+        pass
+
     if parse(image_name) in os.listdir(data_path + "detection_output/raw/"):
         f=open(path+parse(image_name), "r")
         line=f.readline()
