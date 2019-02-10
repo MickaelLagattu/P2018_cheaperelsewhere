@@ -1,7 +1,11 @@
 
 import unittest
-from .ce_text_processing import BoV, Word2Vec, PreprocessSentence
-from .text_global_variables import w2vfile
+try:
+    from .ce_text_processing import BoV, Word2Vec, PreprocessSentence
+    from .text_global_variables import w2vfile
+except ModuleNotFoundError: # If we run the tests, the working directory is not the same
+    from ce_text_processing import BoV, Word2Vec, PreprocessSentence
+    from text_global_variables import w2vfile
 import numpy as np
 
 class TestBagOfWords(unittest.TestCase):

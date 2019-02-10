@@ -1,5 +1,8 @@
+import os
 word_list_name = "words_list_all.csv"
-w2vfile = "ce_text_processing/wiki.fr.vec"
+full_path = os.path.realpath(__file__)
+path, filename = os.path.split(full_path)
+w2vfile = os.path.join(path, "wiki.fr.vec")
 
 ### parameters for for word2vec
 nmax = 50000 # maximum number of words useds for word2vec

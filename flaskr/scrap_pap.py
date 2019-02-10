@@ -53,6 +53,7 @@ headers = {
 def scrapp_all_pap():
     url_base = "https://www.pap.fr/annonce/vente-appartement-maison-paris-75-g439-"
     for i in range(21):
+        print("-----------Page :", i, "-----------")
         page_links = search_links_pap(url_base + str(i))
         time.sleep(2)
         for element in page_links:
