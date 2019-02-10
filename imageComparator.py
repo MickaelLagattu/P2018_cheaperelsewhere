@@ -80,7 +80,7 @@ def global_score(image1, image2):
     # image2 = "static/images/"+image2
 
     try:
-        if functions.getSize("static/images/"+image1)==functions.getSize("static/images/"+image2):
+        if functions.getSize(data_path+image1)==functions.getSize(data_path+image2):
             print(111)
             if SSIM(image1, image2).compare_images()[0]>0.8:
                 return 1
@@ -88,52 +88,55 @@ def global_score(image1, image2):
             print(222)
             if histogram(image1, image2).correlation()>0.95:
                 return 1
-        else:
-            print(333)
-            h=histogram(image1, image2).correlation()
-            j=functions.jaccard(image1, image2)
-            return (2*h + 0*j) / 2
+            else:
+                print(333)
+                h=histogram(image1, image2).correlation()
+                # j=functions.jaccard(image1, image2)
+                j=0
+                return (2*h + 0*j) / 2
     except Exception as e:
         print(444)
         print(e)
         h = histogram(image1, image2).correlation()
-        j = functions.jaccard(image1, image2)
+        # j = functions.jaccard(image1, image2)
+        j=0
         return (2 * h + 0 * j) / 2
 
     print("On ne devrait pas être là")
     return 0
 
 
+
 "test"
-if  __name__ == "__main__":
-
-    "test SSIM"
-    print("\nTest SSIM")
-    image1 = "with_logo.jpg"
-    image2 = "without_logo.jpg"
-    print("(SSIM, MSE) : ", SSIM(image1, image2).compare_images())
-
-
-    # print(SSIM(image1, image2))
-    if SSIM(image1, image2).compare_images()[0] > 0.9:
-        print("Exactly the same images, possibly with a logo superposed : ", image1, "and", image2)
-
-    print("")
-
-    "Histogram test"
-    print("\nTest Histogramme")
-    files = []
-    for e in os.listdir(data_path):
-        if '.jpg' in e: files.append(e)
-    near_histo=dict()
-    for i in range(len(files)):
-        near_histo[files[i]]=set()
-        others=[e for e in files if e!=files[i]]
-        for x in others:
-            if histogram(files[i],x).correlation()>=0.8:
-                near_histo[files[i]].add(x)
-    print("Images with similar histograms : ",near_histo)
-
-    # print("")
-    # image="century.jpg"
-    # print(detection(image).getObjects())
+# if  __name__ == "__main__":
+#
+#     "test SSIM"
+#     print("\nTest SSIM")
+#     image1 = "with_logo.jpg"
+#     image2 = "without_logo.jpg"
+#     print("(SSIM, MSE) : ", SSIM(image1, image2).compare_images())
+#
+#
+#     # print(SSIM(image1, image2))
+#     if SSIM(image1, image2).compare_images()[0] > 0.9:
+#         print("Exactly the same images, possibly with a logo superposed : ", image1, "and", image2)
+#
+#     print("")
+#
+#     "Histogram test"
+#     print("\nTest Histogramme")
+#     files = []
+#     for e in os.listdir(data_path):
+#         if '.jpg' in e: files.append(e)
+#     near_histo=dict()
+#     for i in range(len(files)):
+#         near_histo[files[i]]=set()
+#         others=[e for e in files if e!=files[i]]
+#         for x in others:
+#             if histogram(files[i],x).correlation()>=0.8:
+#                 near_histo[files[i]].add(x)
+#     print("Images with similar histograms : ",near_histo)
+#
+#     # print("")
+#     # image="century.jpg"
+#     # print(detection(image).getObjects())
