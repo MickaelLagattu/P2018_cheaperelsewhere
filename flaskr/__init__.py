@@ -46,6 +46,7 @@ def create_app():
         page = PageFactory.generate_page('RESULT')
         return page.process(mongo)
 
+    #The error page
     @app.route('/error')
     def error_page():
         page = PageFactory.generate_page('ERROR')

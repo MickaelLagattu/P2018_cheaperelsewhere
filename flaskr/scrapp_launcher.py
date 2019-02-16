@@ -1,6 +1,5 @@
 
 
-#import des codes de scrapp
 
 from threading import Thread
 import schedule
@@ -42,13 +41,15 @@ class Scrapper(Thread):
         sites = ["pap.fr", "century21.fr"] # The list of sites to be scrapped
 
         for site in sites:
-            #n_uplets, liens = la commande pour scrapper ce site. Doit renvoyer une liste de n_uplets et la liste des liens correspondants
-            #n_uplets, links = [[5000,45,40,"F5",5,75001,"Cette annonce est très belle","Une belle annonce",["static/TestFrontImages/test_image_1.jpg"], "pap.fr123456789"]], [["http://www.google.fr"]]
 
             if site == "century21.fr":
-                my_generator = scrapp_all_century_21
+                my_generator = scrapp_all_century_21 # generator
             elif site == "pap.fr":
-                my_generator = scrapp_all_pap
+                my_generator = scrapp_all_pap # generator
+
+            #To add a site to scrap, import its generator functon,
+            #add its name in the list above and add a condition in the
+            #if statement
 
             for n_uplet, link in my_generator():
 

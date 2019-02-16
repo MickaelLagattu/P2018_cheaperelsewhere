@@ -36,8 +36,10 @@ class LinkProcess:
                 site_id = splitted[-1]
             else:
                 return []
+                # This ad is not in our database
         except:
             return []
+            # Unable to find the site id of this image
 
         final_site_id = site.split(".")[0] + " " + site_id
 
