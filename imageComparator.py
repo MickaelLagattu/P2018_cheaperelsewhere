@@ -14,11 +14,13 @@ data_path = os.path.join(path, "flaskr/static/images/")
 
 
 class histogram:
+    """this class implements the mesure of correlation between two images histograms"""
     def __init__(self,image1,image2):
         self.image1=data_path + image1
         self.image2=data_path + image2
 
     def correlation(self):
+        """ return a float between 0 and 1"""
         image1, image2= self.image1, self.image2
 
         filenames = [image1, image2]
@@ -50,6 +52,7 @@ class histogram:
 
 "Structural Similarity Index Measure"
 class SSIM:
+    """this class implements the mesure of the structural similarity index between two images"""
     def __init__(self,image1,image2):
         print('SSIM')
         print("image1 : ", image1)
@@ -60,12 +63,14 @@ class SSIM:
         self.image2 = cv2.cvtColor(self.image2, cv2.COLOR_BGR2GRAY)
 
     def mse(self):
+        """this method returns the mean square error"""
         image1, image2= self.image1, self.image2
         err = np.sum((image1.astype("float") - image2.astype("float")) ** 2)
         err /= float(image1.shape[0] * image1.shape[1])
         return err
 
     def compare_images(self):
+        """this method return a the couple (SSSIM, MSE)"""
         image1, image2= self.image1, self.image2
         m = self.mse()
         s = compare_ssim(image1, image2)
@@ -78,31 +83,27 @@ class SSIM:
 def global_score(image1, image2):
     # image1 = "static/images/"+image1
     # image2 = "static/images/"+image2
-
+    """this function uses the methods above to calculate a global_score for a couple images.
+    It returns 1 when we are sure that the two arguments refer to the same image.
+    Otherwise, it returns an average score."""
     try:
         if functions.getSize(data_path+image1)==functions.getSize(data_path+image2):
-            print(111)
             if SSIM(image1, image2).compare_images()[0]>0.8:
                 return 1
         elif image1!=image2:
-            print(222)
             if histogram(image1, image2).correlation()>0.95:
                 return 1
             else:
-                print(333)
                 h=histogram(image1, image2).correlation()
-                # j=functions.jaccard(image1, image2)
-                j=0
-                return (2*h + 0*j) / 2
+                j=functions.jaccard(image1, image2)
+                return (h + j) / 2
     except Exception as e:
         print(444)
         print(e)
         h = histogram(image1, image2).correlation()
-        # j = functions.jaccard(image1, image2)
-        j=0
-        return (2 * h + 0 * j) / 2
+        j = functions.jaccard(image1, image2)
+        return (h + j) / 2
 
-    print("On ne devrait pas être là")
     return 0
 
 
