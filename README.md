@@ -15,6 +15,5 @@ Ensuite, il faut créer un dossier qui s'appelle "images" dans flaskr/static, pu
 Enfin, il faut installer le logiciel mongodb Server depuis le site https://www.mongodb.com/download-center/community.
 Après l'installation, il faudra lancer l'exécutable mongod.exe. Le programme fonctionne s'il affiche "Waiting for connections".
 
-Pour lancer le serveur CheaperElsewhere, il suffit ensuite de se placer dans le dossier flaskr et de lancer la commmande
-``flask run``. Le serveur démarrera et la page d'accueil sera accessible sur le navigateur à l'adresse
+Pour lancer le serveur CheaperElsewhere, il suffit ensuite de se placer dans le dossier flaskr et de lancer la commmande ``export FLASK_APP=__init__.py`` puis ``flask run``(ou si vous êtes sous windows ``python -m flask run`` ou ``python3 -m flask run`` selon votre version Python). Le serveur démarrera et la page d'accueil sera accessible sur le navigateur à l'adresse
 ``localhost:5000``.
